@@ -10,10 +10,8 @@ const navigation = [
   { name: 'Career Quiz', href: '/career-quiz', icon: ClipboardList },
   { name: 'Course Suggestions', href: '/course-suggestions', icon: GraduationCap },
   { name: 'Career Paths', href: '/career-paths', icon: Briefcase },
-  { name: 'Commerce Careers', href: '/commerce', icon: TrendingUp },
   { name: 'Explore Career Paths', href: '/explore-career-paths', icon: MapPin },
   { name: 'College Directory', href: '/college-directory', icon: Building2 },
-  { name: 'Scholarships', href: '/scholarships', icon: Gift },
 ];
 
 const importantDates = [

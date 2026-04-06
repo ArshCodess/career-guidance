@@ -9,7 +9,7 @@ import {
   Microscope, Calculator, Music, Landmark, Briefcase,
   HeartPulse, Cpu, PenTool,
 } from 'lucide-react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
