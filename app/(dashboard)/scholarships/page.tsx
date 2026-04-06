@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
 import {
   Search, MapPin, Star, ArrowRight, ChevronDown,
   GraduationCap, Sparkles, Trophy, BookOpen, Users,
@@ -339,18 +338,18 @@ export default function ScholarshipsPage() {
   const [type, setType] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  useEffect(() => { loadScholarships(); }, []);
+  // useEffect(() => { loadScholarships(); }, []);
 
-  async function loadScholarships() {
-    try {
-      const { data } = await supabase
-        .from('scholarships')
-        .select('*')
-        .order('is_featured', { ascending: false });
-      if (data && data.length > 0) setDbScholarships(data);
-    } catch (_) {}
-    setLoading(false);
-  }
+  // async function loadScholarships() {
+  //   try {
+  //     const { data } = await supabase
+  //       .from('scholarships')
+  //       .select('*')
+  //       .order('is_featured', { ascending: false });
+  //     if (data && data.length > 0) setDbScholarships(data);
+  //   } catch (_) {}
+  //   setLoading(false);
+  // }
 
   // Use DB data if available, otherwise show samples
   const allData = dbScholarships.length > 0 ? dbScholarships : SAMPLE_SCHOLARSHIPS;

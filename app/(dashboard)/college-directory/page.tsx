@@ -7,7 +7,6 @@ import {
   ChevronDown, Dumbbell, Coffee, Search, ArrowRight,
   Building2, Users, TrendingUp, Award,
 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -241,19 +240,19 @@ export default function CollegeDirectoryPage() {
   const [activeStream, setActiveStream] = useState<string | null>(null);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data: cd, error } = await supabase.from('colleges').select('*').order('distance_km');
-        if (error || !cd?.length) return;
-        const results = await Promise.all(
-          cd.map((c: College) => supabase.from('courses').select('degree_name,stream,cutoff_percentage').eq('college_id', c.id))
-        );
-        const map: Record<string, Course[]> = {};
-        cd.forEach((c: College, i: number) => { map[c.id] = results[i].data ?? []; });
-        setColleges(cd);
-        setCourses(map);
-      } catch { /* keep fallback */ }
-    })();
+    // (async () => {
+    //   try {
+    //     const { data: cd, error } = await supabase.from('colleges').select('*').order('distance_km');
+    //     if (error || !cd?.length) return;
+    //     const results = await Promise.all(
+    //       cd.map((c: College) => supabase.from('courses').select('degree_name,stream,cutoff_percentage').eq('college_id', c.id))
+    //     );
+    //     const map: Record<string, Course[]> = {};
+    //     cd.forEach((c: College, i: number) => { map[c.id] = results[i].data ?? []; });
+    //     setColleges(cd);
+    //     setCourses(map);
+    //   } catch { /* keep fallback */ }
+    // })();
   }, []);
 
   const toggleShortlist = (id: string) =>

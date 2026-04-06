@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   CircleCheck as CheckCircle2,
   Circle,
@@ -35,7 +35,6 @@ const QUESTIONS = [
   { question: 'What motivates you the most?',
     options: ['Solving problems', 'Helping others', 'Creating new things', 'Achieving goals'] },
 ];
-
 const STREAMS = [
   {
     id: 'science', label: 'Science', icon: FlaskConical,
@@ -66,7 +65,7 @@ const STREAMS = [
       { name: 'CA/CS', sub: 'Chartered Accountant' },
       { name: 'BMS', sub: 'Management Studies' },
     ],
-  },
+  }
 ];
 
 const RESULT_COURSES = [
@@ -237,7 +236,11 @@ export default function CourseSuggestionsPage() {
   const [showResults, setShowResults] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-
+  useEffect(()=>{
+  const data = fetch('/api/career-suggestions').then(res=>res.json()).then(data=>{
+    console.log(data);
+  });
+})
   if (showQuiz) {
     return (
       <div className="space-y-5">

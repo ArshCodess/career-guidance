@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { MapPin, ExternalLink, GraduationCap, Star, SlidersHorizontal, X, Wifi, BookOpen, Home, Monitor, FlaskConical, ChevronDown, Search } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -233,30 +232,30 @@ export default function CollegeDirectoryPage() {
 
   useEffect(() => {
     // Try to load real Supabase data in background after render
-    (async () => {
-      try {
-        const { data: collegeData, error } = await supabase
-          .from('colleges')
-          .select('*')
-          .order('distance_km');
+    // (async () => {
+    //   try {
+    //     const { data: collegeData, error } = await supabase
+    //       .from('colleges')
+    //       .select('*')
+    //       .order('distance_km');
 
-        if (error || !collegeData || collegeData.length === 0) return;
+    //     if (error || !collegeData || collegeData.length === 0) return;
 
-        const results = await Promise.all(
-          collegeData.map((c: College) =>
-            supabase.from('courses').select('degree_name,stream,cutoff_percentage').eq('college_id', c.id)
-          )
-        );
-        const map: Record<string, Course[]> = {};
-        collegeData.forEach((c: College, i: number) => {
-          map[c.id] = results[i].data ?? [];
-        });
-        setColleges(collegeData);
-        setCourses(map);
-      } catch {
-        // Fallback already shown — do nothing
-      }
-    })();
+    //     const results = await Promise.all(
+    //       collegeData.map((c: College) =>
+    //         supabase.from('courses').select('degree_name,stream,cutoff_percentage').eq('college_id', c.id)
+    //       )
+    //     );
+    //     const map: Record<string, Course[]> = {};
+    //     collegeData.forEach((c: College, i: number) => {
+    //       map[c.id] = results[i].data ?? [];
+    //     });
+    //     setColleges(collegeData);
+    //     setCourses(map);
+    //   } catch {
+    //     // Fallback already shown — do nothing
+    //   }
+    // })();
   }, []);
 
   const toggleShortlist = (id: string) => {
