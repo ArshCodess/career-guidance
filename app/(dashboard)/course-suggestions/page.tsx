@@ -17,23 +17,31 @@ import {
 
 /* ─── Design tokens ─────────────────────────────────────── */
 const GRAD = {
-  science:  'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  arts:     'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+  science: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  arts: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
   commerce: 'linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%)',
-  page:     'linear-gradient(135deg, #ff6b9d 0%, #ff8c42 40%, #ff6b6b 70%, #c95cf4 100%)',
-  quiz:     'linear-gradient(135deg, #667eea 0%, #764ba2 60%, #f5576c 100%)',
+  page: 'linear-gradient(135deg, #ff6b9d 0%, #ff8c42 40%, #ff6b6b 70%, #c95cf4 100%)',
+  quiz: 'linear-gradient(135deg, #667eea 0%, #764ba2 60%, #f5576c 100%)',
 };
 
 /* ─── Data ─────────────────────────────────────────────── */
 const QUESTIONS = [
-  { question: 'Which subjects do you enjoy the most?',
-    options: ['Science & Mathematics', 'Languages & Literature', 'Business & Economics', 'Arts & Design'] },
-  { question: 'What type of career appeals to you?',
-    options: ['Technology & Innovation', 'Creative & Artistic', 'Business & Management', 'Research & Analysis'] },
-  { question: 'How do you prefer to work?',
-    options: ['Independently', 'In teams', 'Mix of both', 'Leading others'] },
-  { question: 'What motivates you the most?',
-    options: ['Solving problems', 'Helping others', 'Creating new things', 'Achieving goals'] },
+  {
+    question: 'Which subjects do you enjoy the most?',
+    options: ['Science & Mathematics', 'Languages & Literature', 'Business & Economics', 'Arts & Design']
+  },
+  {
+    question: 'What type of career appeals to you?',
+    options: ['Technology & Innovation', 'Creative & Artistic', 'Business & Management', 'Research & Analysis']
+  },
+  {
+    question: 'How do you prefer to work?',
+    options: ['Independently', 'In teams', 'Mix of both', 'Leading others']
+  },
+  {
+    question: 'What motivates you the most?',
+    options: ['Solving problems', 'Helping others', 'Creating new things', 'Achieving goals']
+  },
 ];
 const STREAMS = [
   {
@@ -233,14 +241,40 @@ function QuizView({ onClose, onComplete }: { onClose: () => void; onComplete: ()
 
 /* ─── Main Page ─────────────────────────────────────────── */
 export default function CourseSuggestionsPage() {
+  const [isLoading, setIsLoading] = useState(true);
   const [showResults, setShowResults] = useState(false);
   const [showQuiz, setShowQuiz] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-  useEffect(()=>{
-  const data = fetch('/api/career-suggestions').then(res=>res.json()).then(data=>{
-    console.log(data);
-  });
-})
+  const [streamsData, setStreamsData] = useState(STREAMS);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/course-suggestions');
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
+
+        const updatedStreams = STREAMS.map((stream) => ({
+          ...stream,
+          courses: data[stream.id]?.map((course: any) => ({
+            name: course.id.toUpperCase(),
+            sub: course.name
+          })) || stream.courses
+        }));
+
+        setStreamsData(updatedStreams);
+      } catch (error) {
+        console.error("Error updating course UI:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
   if (showQuiz) {
     return (
       <div className="space-y-5">
@@ -348,9 +382,27 @@ export default function CourseSuggestionsPage() {
       </div>
 
       {/* Stream cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {STREAMS.map(s => <StreamCard key={s.id} stream={s} />)}
-      </div>
+      {isLoading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="rounded-3xl overflow-hidden" style={{ background: 'rgba(255,255,255,0.92)' }}>
+              <div className="p-5 space-y-4">
+                <div className="h-8 rounded bg-slate-200 animate-pulse" />
+                <div className="space-y-3">
+                  {[1, 2, 3, 4].map(j => (
+                    <div key={j} className="h-16 rounded bg-slate-100 animate-pulse" />
+                  ))}
+                </div>
+                <div className="h-10 rounded-2xl bg-slate-200 animate-pulse" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {streamsData.map(s => <StreamCard key={s.id} stream={s} />)}
+        </div>
+      )}
 
       {/* Explore Career Paths */}
       <div className="rounded-3xl p-6" style={{ ...glassWhite, boxShadow: '0 8px 32px rgba(0,0,0,0.06)' }}>
