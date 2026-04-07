@@ -1,0 +1,3458 @@
+{
+  "metadata": {
+    "test_name": "Learnthru Career Psychometric Test",
+    "version": "1.0",
+    "description": "A 40-question psychometric test across 4 sections that maps student responses to career-aligned specialization traits.",
+    "total_questions": 40,
+    "sections": [
+      "interest",
+      "aptitude",
+      "personality",
+      "values"
+    ],
+    "scoring": {
+      "method": "trait_weighted",
+      "explanation": "Each option maps to one or more traits with a weight (1–3). Final score per specialization = sum of weights of matched traits. Higher score = better fit.",
+      "weights": {
+        "3": "Strong signal for that trait",
+        "2": "Moderate signal",
+        "1": "Weak / supporting signal"
+      }
+    }
+  },
+  "sections": [
+    {
+      "section_id": "interest",
+      "section_name": "Interest & Passion",
+      "description": "What genuinely excites you? There are no right or wrong answers.",
+      "icon": "🔥",
+      "questions": [
+        {
+          "question_id": "INT_01",
+          "question": "When you have free time and access to a computer, what are you most likely to do?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Write code, build a small project or debug something",
+              "traits": [
+                {
+                  "trait": "logical",
+                  "weight": 3
+                },
+                {
+                  "trait": "coding_enthusiast",
+                  "weight": 3
+                },
+                {
+                  "trait": "problem_solver",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Design a UI mockup, edit graphics or create digital art",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 3
+                },
+                {
+                  "trait": "visual_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "user_centric",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Read about AI research, watch ML tutorials or experiment with models",
+              "traits": [
+                {
+                  "trait": "curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "data_driven",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Read news, browse social media trends or write something",
+              "traits": [
+                {
+                  "trait": "communicative",
+                  "weight": 3
+                },
+                {
+                  "trait": "socially_aware",
+                  "weight": 2
+                },
+                {
+                  "trait": "trend_aware",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "INT_02",
+          "question": "Which subject in school do / did you enjoy the most?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Mathematics — I love solving equations and proofs",
+              "traits": [
+                {
+                  "trait": "mathematical",
+                  "weight": 3
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                },
+                {
+                  "trait": "logical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Physics — circuits, mechanics, and how things work",
+              "traits": [
+                {
+                  "trait": "technical",
+                  "weight": 3
+                },
+                {
+                  "trait": "electronics_curious",
+                  "weight": 2
+                },
+                {
+                  "trait": "mechanical_aptitude",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Biology / Chemistry — the science of life and matter",
+              "traits": [
+                {
+                  "trait": "scientific",
+                  "weight": 3
+                },
+                {
+                  "trait": "patient",
+                  "weight": 2
+                },
+                {
+                  "trait": "detail_oriented",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Economics / Commerce — markets, money, and business",
+              "traits": [
+                {
+                  "trait": "numerical",
+                  "weight": 3
+                },
+                {
+                  "trait": "strategic_thinker",
+                  "weight": 2
+                },
+                {
+                  "trait": "business_minded",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "English / Arts — language, literature, and expression",
+              "traits": [
+                {
+                  "trait": "communicative",
+                  "weight": 3
+                },
+                {
+                  "trait": "storyteller",
+                  "weight": 2
+                },
+                {
+                  "trait": "creative",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "INT_03",
+          "question": "Pick the project you'd most enjoy working on for a year:",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Building an app that millions of people use every day",
+              "traits": [
+                {
+                  "trait": "problem_solver",
+                  "weight": 3
+                },
+                {
+                  "trait": "tech_curious",
+                  "weight": 2
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Designing and building a physical structure — a bridge, building, or machine",
+              "traits": [
+                {
+                  "trait": "hands_on",
+                  "weight": 3
+                },
+                {
+                  "trait": "spatial_reasoning",
+                  "weight": 3
+                },
+                {
+                  "trait": "structured_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Researching a cure for a disease or a new scientific theory",
+              "traits": [
+                {
+                  "trait": "scientific",
+                  "weight": 3
+                },
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "curious",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Launching and growing a business from scratch",
+              "traits": [
+                {
+                  "trait": "extroverted",
+                  "weight": 2
+                },
+                {
+                  "trait": "strategic_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "risk_aware",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "Investigating a social issue and writing stories that drive change",
+              "traits": [
+                {
+                  "trait": "investigative",
+                  "weight": 3
+                },
+                {
+                  "trait": "socially_aware",
+                  "weight": 3
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "INT_04",
+          "question": "Which of these YouTube rabbit holes would you fall into at 2 AM?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "How neural networks actually learn — visualizations and explainers",
+              "traits": [
+                {
+                  "trait": "data_driven",
+                  "weight": 3
+                },
+                {
+                  "trait": "mathematical",
+                  "weight": 2
+                },
+                {
+                  "trait": "curious",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "How electronics / CPUs are made — chip fabrication and engineering",
+              "traits": [
+                {
+                  "trait": "electronics_curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "hardware_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "technical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "How massive dams, skyscrapers, or roads are built",
+              "traits": [
+                {
+                  "trait": "outdoor_oriented",
+                  "weight": 2
+                },
+                {
+                  "trait": "spatial_reasoning",
+                  "weight": 3
+                },
+                {
+                  "trait": "mechanical_aptitude",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "UI/UX redesigns, design critiques, or colour theory deep-dives",
+              "traits": [
+                {
+                  "trait": "visual_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "user_empathy",
+                  "weight": 3
+                },
+                {
+                  "trait": "creative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "True crime documentaries or investigative journalism breakdowns",
+              "traits": [
+                {
+                  "trait": "investigative",
+                  "weight": 3
+                },
+                {
+                  "trait": "storyteller",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "INT_05",
+          "question": "Which of these roles sounds most exciting to you?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Lawyer arguing a high-stakes corporate case",
+              "traits": [
+                {
+                  "trait": "persuasive",
+                  "weight": 3
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                },
+                {
+                  "trait": "business_minded",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Doctor diagnosing rare diseases and helping patients",
+              "traits": [
+                {
+                  "trait": "empathetic",
+                  "weight": 3
+                },
+                {
+                  "trait": "scientific",
+                  "weight": 2
+                },
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Data Scientist finding hidden patterns in huge datasets",
+              "traits": [
+                {
+                  "trait": "statistical_thinking",
+                  "weight": 3
+                },
+                {
+                  "trait": "data_driven",
+                  "weight": 3
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Financial Analyst managing investments for a firm",
+              "traits": [
+                {
+                  "trait": "numerical",
+                  "weight": 3
+                },
+                {
+                  "trait": "risk_aware",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "Journalist breaking a major news story",
+              "traits": [
+                {
+                  "trait": "communicative",
+                  "weight": 3
+                },
+                {
+                  "trait": "investigative",
+                  "weight": 3
+                },
+                {
+                  "trait": "storyteller",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "INT_06",
+          "question": "Which type of work environment sounds most appealing?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "A quiet lab or research center where I can focus deeply",
+              "traits": [
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "patient",
+                  "weight": 2
+                },
+                {
+                  "trait": "detail_oriented",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "A busy site — field, factory, hospital or construction zone",
+              "traits": [
+                {
+                  "trait": "hands_on",
+                  "weight": 3
+                },
+                {
+                  "trait": "outdoor_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "service_oriented",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "A fast-paced office or startup where things change daily",
+              "traits": [
+                {
+                  "trait": "fast_learner",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                },
+                {
+                  "trait": "collaborative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Anywhere — I want to work remotely on my laptop",
+              "traits": [
+                {
+                  "trait": "tech_savvy",
+                  "weight": 3
+                },
+                {
+                  "trait": "organized",
+                  "weight": 2
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "A courtroom, studio, or public-facing setting",
+              "traits": [
+                {
+                  "trait": "extroverted",
+                  "weight": 3
+                },
+                {
+                  "trait": "persuasive",
+                  "weight": 2
+                },
+                {
+                  "trait": "social",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "INT_07",
+          "question": "What kind of problem do you most enjoy solving?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "A logical puzzle or algorithm challenge",
+              "traits": [
+                {
+                  "trait": "logical",
+                  "weight": 3
+                },
+                {
+                  "trait": "problem_solver",
+                  "weight": 3
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "A design challenge — making something look and feel perfect",
+              "traits": [
+                {
+                  "trait": "design_thinking",
+                  "weight": 3
+                },
+                {
+                  "trait": "creative",
+                  "weight": 3
+                },
+                {
+                  "trait": "user_centric",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "A numbers problem — analysis, statistics, or financial modelling",
+              "traits": [
+                {
+                  "trait": "numerical",
+                  "weight": 3
+                },
+                {
+                  "trait": "statistical_thinking",
+                  "weight": 3
+                },
+                {
+                  "trait": "precise",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "A human problem — understanding why people behave the way they do",
+              "traits": [
+                {
+                  "trait": "empathetic",
+                  "weight": 3
+                },
+                {
+                  "trait": "socially_aware",
+                  "weight": 2
+                },
+                {
+                  "trait": "user_empathy",
+                  "weight": 3
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "An engineering problem — optimizing a physical or electrical system",
+              "traits": [
+                {
+                  "trait": "technical",
+                  "weight": 3
+                },
+                {
+                  "trait": "precision_focused",
+                  "weight": 3
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "INT_08",
+          "question": "How do you usually spend your school/college fest time?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Competing in coding, quiz or debate events",
+              "traits": [
+                {
+                  "trait": "logical",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                },
+                {
+                  "trait": "persuasive",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Performing, anchoring or running the media/coverage team",
+              "traits": [
+                {
+                  "trait": "communicative",
+                  "weight": 3
+                },
+                {
+                  "trait": "extroverted",
+                  "weight": 3
+                },
+                {
+                  "trait": "storyteller",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Organising logistics, managing teams or sponsorships",
+              "traits": [
+                {
+                  "trait": "organized",
+                  "weight": 3
+                },
+                {
+                  "trait": "collaborative",
+                  "weight": 2
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Designing posters, making videos or working on the website",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 3
+                },
+                {
+                  "trait": "visual_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "tech_savvy",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "Attending workshops and exploring new technical things",
+              "traits": [
+                {
+                  "trait": "curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "fast_learner",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "INT_09",
+          "question": "If you could shadow a professional for a week, who would you pick?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "A structural or civil engineer working on a mega infrastructure project",
+              "traits": [
+                {
+                  "trait": "spatial_reasoning",
+                  "weight": 3
+                },
+                {
+                  "trait": "outdoor_oriented",
+                  "weight": 2
+                },
+                {
+                  "trait": "structured_thinker",
+                  "weight": 3
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "A product manager at a top tech company (Google, Amazon)",
+              "traits": [
+                {
+                  "trait": "systems_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "strategic",
+                  "weight": 2
+                },
+                {
+                  "trait": "collaborative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "An AI researcher publishing papers at NeurIPS",
+              "traits": [
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "mathematical",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "A surgeon performing complex operations",
+              "traits": [
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 3
+                },
+                {
+                  "trait": "precision_focused",
+                  "weight": 3
+                },
+                {
+                  "trait": "patient",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "A stock trader or investment banker managing millions",
+              "traits": [
+                {
+                  "trait": "risk_aware",
+                  "weight": 3
+                },
+                {
+                  "trait": "numerical",
+                  "weight": 2
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "INT_10",
+          "question": "Which of these clubs would you most likely join?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Robotics or Electronics Club",
+              "traits": [
+                {
+                  "trait": "hardware_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "electronics_curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "hands_on",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Entrepreneurship or Finance Club",
+              "traits": [
+                {
+                  "trait": "business_minded",
+                  "weight": 3
+                },
+                {
+                  "trait": "strategic_thinker",
+                  "weight": 2
+                },
+                {
+                  "trait": "risk_aware",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Photography, Filmmaking or Journalism Club",
+              "traits": [
+                {
+                  "trait": "storyteller",
+                  "weight": 3
+                },
+                {
+                  "trait": "investigative",
+                  "weight": 2
+                },
+                {
+                  "trait": "visual_thinker",
+                  "weight": 3
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Competitive Programming or AI/ML Club",
+              "traits": [
+                {
+                  "trait": "logical",
+                  "weight": 3
+                },
+                {
+                  "trait": "data_driven",
+                  "weight": 2
+                },
+                {
+                  "trait": "coding_enthusiast",
+                  "weight": 3
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "Social Work / NSS / Community Service",
+              "traits": [
+                {
+                  "trait": "service_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 3
+                },
+                {
+                  "trait": "social",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "aptitude",
+      "section_name": "Aptitude & Thinking Style",
+      "description": "How do you naturally think and process information?",
+      "icon": "🧠",
+      "questions": [
+        {
+          "question_id": "APT_01",
+          "question": "A function is supposed to return the second largest number in a list, but it's returning the wrong answer. How do you approach this?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "I trace through the logic step by step and find the exact line that's wrong",
+              "traits": [
+                {
+                  "trait": "logical",
+                  "weight": 3
+                },
+                {
+                  "trait": "detail_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "I Google the error, find a Stack Overflow post and adapt the solution",
+              "traits": [
+                {
+                  "trait": "fast_learner",
+                  "weight": 3
+                },
+                {
+                  "trait": "practical",
+                  "weight": 3
+                },
+                {
+                  "trait": "tech_savvy",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "I rewrite the function from scratch with a cleaner approach",
+              "traits": [
+                {
+                  "trait": "problem_solver",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                },
+                {
+                  "trait": "coding_enthusiast",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "This scenario doesn't interest me — I'd move on to something else",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 1
+                },
+                {
+                  "trait": "trend_aware",
+                  "weight": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "APT_02",
+          "question": "You're given 3 years of sales data for a company. What's your first instinct?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Plot the data and look for patterns, seasonality or anomalies",
+              "traits": [
+                {
+                  "trait": "data_driven",
+                  "weight": 3
+                },
+                {
+                  "trait": "statistical_thinking",
+                  "weight": 3
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Calculate year-on-year growth, margins and forecast future revenue",
+              "traits": [
+                {
+                  "trait": "numerical",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 2
+                },
+                {
+                  "trait": "strategic_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Ask what decision needs to be made and what information actually matters",
+              "traits": [
+                {
+                  "trait": "systems_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                },
+                {
+                  "trait": "organized",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Turn it into a visual story — a report or presentation",
+              "traits": [
+                {
+                  "trait": "communicative",
+                  "weight": 3
+                },
+                {
+                  "trait": "visual_thinker",
+                  "weight": 2
+                },
+                {
+                  "trait": "storyteller",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "APT_03",
+          "question": "When you study a new concept, which approach works best for you?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Read the theory thoroughly, then attempt problems",
+              "traits": [
+                {
+                  "trait": "structured_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 2
+                },
+                {
+                  "trait": "patient",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Jump straight in and learn by trial and error",
+              "traits": [
+                {
+                  "trait": "hands_on",
+                  "weight": 3
+                },
+                {
+                  "trait": "fast_learner",
+                  "weight": 3
+                },
+                {
+                  "trait": "practical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Watch a visual explanation or diagram first, then connect the dots",
+              "traits": [
+                {
+                  "trait": "visual_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "spatial_reasoning",
+                  "weight": 2
+                },
+                {
+                  "trait": "curious",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Discuss it with someone and build understanding through conversation",
+              "traits": [
+                {
+                  "trait": "collaborative",
+                  "weight": 3
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 2
+                },
+                {
+                  "trait": "social",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "APT_04",
+          "question": "Which task would you complete faster and more accurately?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Spotting an error in a 500-line spreadsheet with financial data",
+              "traits": [
+                {
+                  "trait": "precise",
+                  "weight": 3
+                },
+                {
+                  "trait": "numerical",
+                  "weight": 3
+                },
+                {
+                  "trait": "detail_oriented",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Drawing a floor plan or visualizing how a space could be redesigned",
+              "traits": [
+                {
+                  "trait": "spatial_reasoning",
+                  "weight": 3
+                },
+                {
+                  "trait": "design_thinking",
+                  "weight": 3
+                },
+                {
+                  "trait": "visual_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Reading a legal contract and identifying the problematic clauses",
+              "traits": [
+                {
+                  "trait": "analytical",
+                  "weight": 3
+                },
+                {
+                  "trait": "rule_follower",
+                  "weight": 2
+                },
+                {
+                  "trait": "strategic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Dissecting a mechanical or electronic device to understand how it works",
+              "traits": [
+                {
+                  "trait": "mechanical_aptitude",
+                  "weight": 3
+                },
+                {
+                  "trait": "hardware_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "electronics_curious",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "APT_05",
+          "question": "How do you typically handle a complex, multi-week project?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Break it into sub-tasks, set milestones, and track progress daily",
+              "traits": [
+                {
+                  "trait": "organized",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 3
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Sprint hard when inspired, then review everything at the end",
+              "traits": [
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                },
+                {
+                  "trait": "creative",
+                  "weight": 2
+                },
+                {
+                  "trait": "fast_learner",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Coordinate with others constantly and divide work by strengths",
+              "traits": [
+                {
+                  "trait": "collaborative",
+                  "weight": 3
+                },
+                {
+                  "trait": "social",
+                  "weight": 2
+                },
+                {
+                  "trait": "systems_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Research first, experiment a lot, then commit to the best approach",
+              "traits": [
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                },
+                {
+                  "trait": "curious",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "APT_06",
+          "question": "You need to understand how a power grid distributes electricity across a city. How do you think about it?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "I think of it as a graph or network — nodes, edges, load balancing",
+              "traits": [
+                {
+                  "trait": "mathematical",
+                  "weight": 3
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 3
+                },
+                {
+                  "trait": "logical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "I think of transformers, voltage levels and circuit components",
+              "traits": [
+                {
+                  "trait": "technical",
+                  "weight": 3
+                },
+                {
+                  "trait": "math_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "precision_focused",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "I'd want to see the policy side — who regulates it and how pricing works",
+              "traits": [
+                {
+                  "trait": "business_minded",
+                  "weight": 2
+                },
+                {
+                  "trait": "strategic",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "This doesn't really interest me",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 1
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "APT_07",
+          "question": "Someone asks you to explain a complex topic (e.g. how the internet works) to a 12-year-old. What do you do?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Use an analogy — compare it to something they already know",
+              "traits": [
+                {
+                  "trait": "communicative",
+                  "weight": 3
+                },
+                {
+                  "trait": "user_empathy",
+                  "weight": 3
+                },
+                {
+                  "trait": "storyteller",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Draw a diagram or sketch it out visually",
+              "traits": [
+                {
+                  "trait": "visual_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "design_thinking",
+                  "weight": 2
+                },
+                {
+                  "trait": "spatial_reasoning",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Walk them through it step-by-step with examples",
+              "traits": [
+                {
+                  "trait": "structured_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "patient",
+                  "weight": 3
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Give them a hands-on activity so they can discover it themselves",
+              "traits": [
+                {
+                  "trait": "hands_on",
+                  "weight": 3
+                },
+                {
+                  "trait": "service_oriented",
+                  "weight": 2
+                },
+                {
+                  "trait": "practical",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "APT_08",
+          "question": "You've noticed a pattern: every time it rains, your city's traffic app crashes. What do you do?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Try to replicate the bug, isolate the cause and fix the code",
+              "traits": [
+                {
+                  "trait": "logical",
+                  "weight": 3
+                },
+                {
+                  "trait": "coding_enthusiast",
+                  "weight": 2
+                },
+                {
+                  "trait": "detail_oriented",
+                  "weight": 3
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Collect data on both — rainfall, traffic load and crash logs — and correlate",
+              "traits": [
+                {
+                  "trait": "data_driven",
+                  "weight": 3
+                },
+                {
+                  "trait": "statistical_thinking",
+                  "weight": 3
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Report it as a story or public interest issue",
+              "traits": [
+                {
+                  "trait": "investigative",
+                  "weight": 3
+                },
+                {
+                  "trait": "socially_aware",
+                  "weight": 2
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Design a better UX / fallback screen so users aren't confused",
+              "traits": [
+                {
+                  "trait": "user_centric",
+                  "weight": 3
+                },
+                {
+                  "trait": "creative",
+                  "weight": 2
+                },
+                {
+                  "trait": "user_empathy",
+                  "weight": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "APT_09",
+          "question": "Which of these is closest to how you make decisions?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "I analyze all options with data and logic before deciding",
+              "traits": [
+                {
+                  "trait": "analytical",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 2
+                },
+                {
+                  "trait": "risk_aware",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "I go with my gut — fast decisions, course-correct later",
+              "traits": [
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 3
+                },
+                {
+                  "trait": "fast_learner",
+                  "weight": 2
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "I consult people I trust, hear multiple perspectives, then decide",
+              "traits": [
+                {
+                  "trait": "collaborative",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 2
+                },
+                {
+                  "trait": "service_oriented",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "I follow established rules or frameworks — consistency matters",
+              "traits": [
+                {
+                  "trait": "rule_follower",
+                  "weight": 3
+                },
+                {
+                  "trait": "structured_thinker",
+                  "weight": 2
+                },
+                {
+                  "trait": "precise",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "APT_10",
+          "question": "A startup asks you to join. Which role would you naturally gravitate towards?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Lead engineer — architect the backend systems",
+              "traits": [
+                {
+                  "trait": "systems_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "tech_curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "problem_solver",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Product/UX lead — own the user experience end to end",
+              "traits": [
+                {
+                  "trait": "user_centric",
+                  "weight": 3
+                },
+                {
+                  "trait": "user_empathy",
+                  "weight": 3
+                },
+                {
+                  "trait": "design_thinking",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Finance/ops lead — manage budgets, unit economics, hiring",
+              "traits": [
+                {
+                  "trait": "numerical",
+                  "weight": 3
+                },
+                {
+                  "trait": "organized",
+                  "weight": 3
+                },
+                {
+                  "trait": "strategic_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Marketing/comms lead — build the brand and audience",
+              "traits": [
+                {
+                  "trait": "persuasive",
+                  "weight": 3
+                },
+                {
+                  "trait": "trend_aware",
+                  "weight": 3
+                },
+                {
+                  "trait": "extroverted",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "personality",
+      "section_name": "Personality & Work Style",
+      "description": "How you naturally show up in life and work.",
+      "icon": "🪞",
+      "questions": [
+        {
+          "question_id": "PER_01",
+          "question": "Your friends would describe you as someone who…",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Always has a fix for anything technical or logical",
+              "traits": [
+                {
+                  "trait": "problem_solver",
+                  "weight": 3
+                },
+                {
+                  "trait": "tech_curious",
+                  "weight": 2
+                },
+                {
+                  "trait": "logical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Is incredibly creative and has great aesthetic taste",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 3
+                },
+                {
+                  "trait": "visual_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "design_thinking",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Stays calm and thinks clearly even under pressure",
+              "traits": [
+                {
+                  "trait": "patient",
+                  "weight": 3
+                },
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 3
+                },
+                {
+                  "trait": "structured_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Is very organized and gets things done on time, every time",
+              "traits": [
+                {
+                  "trait": "organized",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 3
+                },
+                {
+                  "trait": "precise",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "Lights up any room and makes everyone feel heard",
+              "traits": [
+                {
+                  "trait": "extroverted",
+                  "weight": 3
+                },
+                {
+                  "trait": "social",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "PER_02",
+          "question": "How do you feel after spending 3 hours alone working deeply on something?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Energized and satisfied — deep focus is my best state",
+              "traits": [
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "detail_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "patient",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Accomplished but ready to share and get feedback",
+              "traits": [
+                {
+                  "trait": "collaborative",
+                  "weight": 3
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 2
+                },
+                {
+                  "trait": "fast_learner",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Drained — I do my best work in short bursts with breaks",
+              "traits": [
+                {
+                  "trait": "social",
+                  "weight": 2
+                },
+                {
+                  "trait": "extroverted",
+                  "weight": 2
+                },
+                {
+                  "trait": "trend_aware",
+                  "weight": 1
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "It depends — if I was solving something hard, great; if tedious, awful",
+              "traits": [
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                },
+                {
+                  "trait": "problem_solver",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "PER_03",
+          "question": "When you're part of a group project, which role do you naturally take?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "The one who takes charge and divides up the work",
+              "traits": [
+                {
+                  "trait": "strategic",
+                  "weight": 3
+                },
+                {
+                  "trait": "organized",
+                  "weight": 2
+                },
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "The one who quietly does the most technical/difficult work",
+              "traits": [
+                {
+                  "trait": "detail_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "problem_solver",
+                  "weight": 3
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "The one who makes sure everyone is on the same page",
+              "traits": [
+                {
+                  "trait": "collaborative",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 2
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "The one who comes up with the creative ideas and concepts",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 3
+                },
+                {
+                  "trait": "design_thinking",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "PER_04",
+          "question": "How do you feel about following strict rules or standard procedures?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "I like them — they bring clarity and prevent mistakes",
+              "traits": [
+                {
+                  "trait": "rule_follower",
+                  "weight": 3
+                },
+                {
+                  "trait": "precise",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "I follow them but always look for ways to improve the process",
+              "traits": [
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "I prefer flexibility — I'll find my own best way to the result",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 2
+                },
+                {
+                  "trait": "fast_learner",
+                  "weight": 2
+                },
+                {
+                  "trait": "practical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Rules are necessary in some contexts (medicine/law) but I hate bureaucracy",
+              "traits": [
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 2
+                },
+                {
+                  "trait": "service_oriented",
+                  "weight": 2
+                },
+                {
+                  "trait": "socially_aware",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "PER_05",
+          "question": "How comfortable are you with uncertainty and ambiguity?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Very comfortable — ambiguity is where creativity lives",
+              "traits": [
+                {
+                  "trait": "innovative",
+                  "weight": 3
+                },
+                {
+                  "trait": "curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "creative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Somewhat — I'm okay with it if I have a clear goal",
+              "traits": [
+                {
+                  "trait": "strategic",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                },
+                {
+                  "trait": "problem_solver",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Not very — I prefer clear tasks with defined outcomes",
+              "traits": [
+                {
+                  "trait": "structured_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "precise",
+                  "weight": 2
+                },
+                {
+                  "trait": "organized",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "I thrive under pressure but need some data to guide me",
+              "traits": [
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 3
+                },
+                {
+                  "trait": "data_driven",
+                  "weight": 2
+                },
+                {
+                  "trait": "risk_aware",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "PER_06",
+          "question": "A friend comes to you in an emotional crisis at midnight. You…",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Drop everything and listen without judgment until they feel better",
+              "traits": [
+                {
+                  "trait": "empathetic",
+                  "weight": 3
+                },
+                {
+                  "trait": "patient",
+                  "weight": 3
+                },
+                {
+                  "trait": "service_oriented",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Listen, then immediately try to help them solve the problem",
+              "traits": [
+                {
+                  "trait": "problem_solver",
+                  "weight": 2
+                },
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 2
+                },
+                {
+                  "trait": "collaborative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Ask what they need — listening ear, advice, or distraction — and do that",
+              "traits": [
+                {
+                  "trait": "user_empathy",
+                  "weight": 3
+                },
+                {
+                  "trait": "service_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "This makes me uncomfortable — I struggle with emotional situations",
+              "traits": [
+                {
+                  "trait": "technical",
+                  "weight": 1
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 1
+                },
+                {
+                  "trait": "logical",
+                  "weight": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "PER_07",
+          "question": "How do you typically react to a failure or a mistake you made?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "I analyse what went wrong, document it, and make sure it doesn't repeat",
+              "traits": [
+                {
+                  "trait": "disciplined",
+                  "weight": 3
+                },
+                {
+                  "trait": "detail_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "structured_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "I feel bad briefly, then pivot and try a completely different approach",
+              "traits": [
+                {
+                  "trait": "fast_learner",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                },
+                {
+                  "trait": "risk_aware",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "I talk it through with someone to gain perspective",
+              "traits": [
+                {
+                  "trait": "collaborative",
+                  "weight": 3
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 2
+                },
+                {
+                  "trait": "social",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "I stay calm and methodically check where the system/process broke down",
+              "traits": [
+                {
+                  "trait": "systematic",
+                  "weight": 3
+                },
+                {
+                  "trait": "patient",
+                  "weight": 3
+                },
+                {
+                  "trait": "precise",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "PER_08",
+          "question": "You're asked to give a presentation to 200 people next week. You feel…",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Excited — I love being on stage and commanding an audience",
+              "traits": [
+                {
+                  "trait": "extroverted",
+                  "weight": 3
+                },
+                {
+                  "trait": "persuasive",
+                  "weight": 3
+                },
+                {
+                  "trait": "social",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Okay — I'll prepare thoroughly and deliver it well",
+              "traits": [
+                {
+                  "trait": "organized",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 2
+                },
+                {
+                  "trait": "structured_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Nervous but I'll manage — public speaking isn't natural for me",
+              "traits": [
+                {
+                  "trait": "detail_oriented",
+                  "weight": 2
+                },
+                {
+                  "trait": "research_oriented",
+                  "weight": 2
+                },
+                {
+                  "trait": "patient",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "I'd rather send a detailed written report instead",
+              "traits": [
+                {
+                  "trait": "precise",
+                  "weight": 2
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "PER_09",
+          "question": "Which of these best describes how you spend weekends?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Building or tinkering with something — hardware, code, or crafts",
+              "traits": [
+                {
+                  "trait": "hands_on",
+                  "weight": 3
+                },
+                {
+                  "trait": "mechanical_aptitude",
+                  "weight": 2
+                },
+                {
+                  "trait": "coding_enthusiast",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Going out, meeting people, attending events",
+              "traits": [
+                {
+                  "trait": "extroverted",
+                  "weight": 3
+                },
+                {
+                  "trait": "social",
+                  "weight": 3
+                },
+                {
+                  "trait": "trend_aware",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Reading, researching or consuming content I find interesting",
+              "traits": [
+                {
+                  "trait": "curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Outdoor activities — trekking, sports, travel",
+              "traits": [
+                {
+                  "trait": "outdoor_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "hands_on",
+                  "weight": 2
+                },
+                {
+                  "trait": "practical",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "PER_10",
+          "question": "Which of these statements feels most true about you?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "I notice details that most people miss",
+              "traits": [
+                {
+                  "trait": "detail_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "precise",
+                  "weight": 3
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "I naturally see the big picture and long-term patterns",
+              "traits": [
+                {
+                  "trait": "strategic_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "strategic",
+                  "weight": 3
+                },
+                {
+                  "trait": "systems_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "I connect with people quickly and understand what they need",
+              "traits": [
+                {
+                  "trait": "empathetic",
+                  "weight": 3
+                },
+                {
+                  "trait": "user_empathy",
+                  "weight": 3
+                },
+                {
+                  "trait": "social",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "I learn new things very fast and adapt to any situation",
+              "traits": [
+                {
+                  "trait": "fast_learner",
+                  "weight": 3
+                },
+                {
+                  "trait": "tech_comfortable",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section_id": "values",
+      "section_name": "Values & Life Goals",
+      "description": "What matters to you most in life and career?",
+      "icon": "🎯",
+      "questions": [
+        {
+          "question_id": "VAL_01",
+          "question": "What's your biggest career goal?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Build technology that changes how people live",
+              "traits": [
+                {
+                  "trait": "innovative",
+                  "weight": 3
+                },
+                {
+                  "trait": "tech_curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "problem_solver",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Earn high and build financial independence early",
+              "traits": [
+                {
+                  "trait": "disciplined",
+                  "weight": 2
+                },
+                {
+                  "trait": "risk_aware",
+                  "weight": 3
+                },
+                {
+                  "trait": "strategic_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Help people directly — as a doctor, lawyer or social worker",
+              "traits": [
+                {
+                  "trait": "service_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 3
+                },
+                {
+                  "trait": "patient",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Make my mark creatively — in design, media, or storytelling",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 3
+                },
+                {
+                  "trait": "storyteller",
+                  "weight": 3
+                },
+                {
+                  "trait": "visual_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "Build critical infrastructure — power systems, roads, systems that last",
+              "traits": [
+                {
+                  "trait": "structured_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "outdoor_oriented",
+                  "weight": 2
+                },
+                {
+                  "trait": "spatial_reasoning",
+                  "weight": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "VAL_02",
+          "question": "Which of these means more to you?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Being the smartest person in the room (depth of knowledge)",
+              "traits": [
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "mathematical",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Being the most connected person in the room (breadth of relationships)",
+              "traits": [
+                {
+                  "trait": "social",
+                  "weight": 3
+                },
+                {
+                  "trait": "extroverted",
+                  "weight": 3
+                },
+                {
+                  "trait": "collaborative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Being the person who gets things done (execution)",
+              "traits": [
+                {
+                  "trait": "practical",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 3
+                },
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Being the most creative person in the room (originality)",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 3
+                },
+                {
+                  "trait": "design_thinking",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "VAL_03",
+          "question": "How important is job security to you?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Very important — a government job or stable career is my priority",
+              "traits": [
+                {
+                  "trait": "rule_follower",
+                  "weight": 3
+                },
+                {
+                  "trait": "disciplined",
+                  "weight": 3
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Moderately — I want stability but I'm open to opportunity",
+              "traits": [
+                {
+                  "trait": "organized",
+                  "weight": 2
+                },
+                {
+                  "trait": "practical",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Not much — I'd rather take risks for bigger rewards",
+              "traits": [
+                {
+                  "trait": "risk_aware",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                },
+                {
+                  "trait": "fast_learner",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "I want to build my own business — employment is the safety net, not the goal",
+              "traits": [
+                {
+                  "trait": "strategic_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "business_minded",
+                  "weight": 3
+                },
+                {
+                  "trait": "persuasive",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "VAL_04",
+          "question": "Which of these impacts feels most meaningful to you?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Writing a research paper that advances human knowledge",
+              "traits": [
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "mathematical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Designing a product used by millions of people",
+              "traits": [
+                {
+                  "trait": "user_centric",
+                  "weight": 3
+                },
+                {
+                  "trait": "design_thinking",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Treating 50 patients a day and improving their health",
+              "traits": [
+                {
+                  "trait": "service_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 3
+                },
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Breaking a news story that changes public policy",
+              "traits": [
+                {
+                  "trait": "investigative",
+                  "weight": 3
+                },
+                {
+                  "trait": "socially_aware",
+                  "weight": 3
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "Building infrastructure that a city uses for 100 years",
+              "traits": [
+                {
+                  "trait": "structured_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "precision_focused",
+                  "weight": 3
+                },
+                {
+                  "trait": "outdoor_oriented",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "VAL_05",
+          "question": "Which value resonates with you most strongly?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Precision and accuracy — doing things right the first time",
+              "traits": [
+                {
+                  "trait": "precise",
+                  "weight": 3
+                },
+                {
+                  "trait": "detail_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "rule_follower",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Curiosity and learning — constantly growing and discovering",
+              "traits": [
+                {
+                  "trait": "curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "fast_learner",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Connection and community — building strong relationships",
+              "traits": [
+                {
+                  "trait": "social",
+                  "weight": 3
+                },
+                {
+                  "trait": "collaborative",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Impact and scale — making a big difference in the world",
+              "traits": [
+                {
+                  "trait": "service_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "strategic",
+                  "weight": 2
+                },
+                {
+                  "trait": "socially_aware",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "VAL_06",
+          "question": "What do you want people to say about you at the end of your career?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "\"She/He was the best engineer/scientist in the field\"",
+              "traits": [
+                {
+                  "trait": "technical",
+                  "weight": 3
+                },
+                {
+                  "trait": "precision_focused",
+                  "weight": 2
+                },
+                {
+                  "trait": "math_oriented",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "\"She/He built systems that millions of people rely on\"",
+              "traits": [
+                {
+                  "trait": "systems_thinker",
+                  "weight": 3
+                },
+                {
+                  "trait": "problem_solver",
+                  "weight": 3
+                },
+                {
+                  "trait": "strategic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "\"She/He truly cared about people and made their lives better\"",
+              "traits": [
+                {
+                  "trait": "service_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 3
+                },
+                {
+                  "trait": "patient",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "\"She/He was a visionary — ahead of their time\"",
+              "traits": [
+                {
+                  "trait": "innovative",
+                  "weight": 3
+                },
+                {
+                  "trait": "research_oriented",
+                  "weight": 2
+                },
+                {
+                  "trait": "data_driven",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "e",
+              "text": "\"She/He told stories that changed how people think\"",
+              "traits": [
+                {
+                  "trait": "storyteller",
+                  "weight": 3
+                },
+                {
+                  "trait": "socially_aware",
+                  "weight": 2
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 3
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "VAL_07",
+          "question": "Which trade-off would you make?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Lower salary but work that genuinely helps people",
+              "traits": [
+                {
+                  "trait": "service_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 2
+                },
+                {
+                  "trait": "patient",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "Higher stress but cutting-edge, exciting work",
+              "traits": [
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                },
+                {
+                  "trait": "tech_curious",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Stable income doing predictable, reliable work",
+              "traits": [
+                {
+                  "trait": "disciplined",
+                  "weight": 3
+                },
+                {
+                  "trait": "systematic",
+                  "weight": 3
+                },
+                {
+                  "trait": "rule_follower",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "High earnings doing financially complex work",
+              "traits": [
+                {
+                  "trait": "numerical",
+                  "weight": 3
+                },
+                {
+                  "trait": "risk_aware",
+                  "weight": 3
+                },
+                {
+                  "trait": "strategic_thinker",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "VAL_08",
+          "question": "Which statement best reflects your relationship with technology?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "I want to build technology — I think in code and systems",
+              "traits": [
+                {
+                  "trait": "tech_curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "coding_enthusiast",
+                  "weight": 3
+                },
+                {
+                  "trait": "systems_thinker",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "I use technology as a creative medium — design, content, media",
+              "traits": [
+                {
+                  "trait": "tech_comfortable",
+                  "weight": 3
+                },
+                {
+                  "trait": "tech_savvy",
+                  "weight": 3
+                },
+                {
+                  "trait": "creative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "Technology is a tool — useful but not my passion",
+              "traits": [
+                {
+                  "trait": "practical",
+                  "weight": 3
+                },
+                {
+                  "trait": "hands_on",
+                  "weight": 2
+                },
+                {
+                  "trait": "outdoor_oriented",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "I'm interested in the hardware and electronics side of technology",
+              "traits": [
+                {
+                  "trait": "hardware_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "electronics_curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "technical",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "VAL_09",
+          "question": "In 10 years, where do you see yourself?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "Running my own company or leading a major team",
+              "traits": [
+                {
+                  "trait": "strategic",
+                  "weight": 3
+                },
+                {
+                  "trait": "business_minded",
+                  "weight": 3
+                },
+                {
+                  "trait": "decisive_under_pressure",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "As a deep domain expert — the go-to person in my field",
+              "traits": [
+                {
+                  "trait": "research_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "curious",
+                  "weight": 2
+                },
+                {
+                  "trait": "mathematical",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "In a role where I interact with and help people every day",
+              "traits": [
+                {
+                  "trait": "service_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "communicative",
+                  "weight": 2
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "Doing creative work that I'm proud of",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 3
+                },
+                {
+                  "trait": "visual_thinker",
+                  "weight": 2
+                },
+                {
+                  "trait": "storyteller",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "question_id": "VAL_10",
+          "question": "What would make you quit a job that pays well?",
+          "type": "single_choice",
+          "options": [
+            {
+              "option_id": "a",
+              "text": "The work is ethically wrong or harms people",
+              "traits": [
+                {
+                  "trait": "service_oriented",
+                  "weight": 3
+                },
+                {
+                  "trait": "socially_aware",
+                  "weight": 3
+                },
+                {
+                  "trait": "empathetic",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "b",
+              "text": "There's nothing to learn — I've stopped growing",
+              "traits": [
+                {
+                  "trait": "curious",
+                  "weight": 3
+                },
+                {
+                  "trait": "fast_learner",
+                  "weight": 3
+                },
+                {
+                  "trait": "innovative",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "c",
+              "text": "The work is too repetitive — I need creative challenge",
+              "traits": [
+                {
+                  "trait": "creative",
+                  "weight": 3
+                },
+                {
+                  "trait": "design_thinking",
+                  "weight": 2
+                },
+                {
+                  "trait": "trend_aware",
+                  "weight": 2
+                }
+              ]
+            },
+            {
+              "option_id": "d",
+              "text": "I'm not making enough impact or building enough depth",
+              "traits": [
+                {
+                  "trait": "strategic",
+                  "weight": 3
+                },
+                {
+                  "trait": "research_oriented",
+                  "weight": 2
+                },
+                {
+                  "trait": "analytical",
+                  "weight": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "scoring_engine": {
+    "description": "How to compute specialization scores from responses",
+    "steps": [
+      "1. For each answer selected, retrieve its traits array.",
+      "2. For each trait in the array, add its weight to that trait's running total.",
+      "3. After all 40 questions, you have a trait_scores dict: { trait_name: total_weight }",
+      "4. For each specialization, compute match_score = sum of trait_scores[t] for each trait t in specialization.psychometric_traits (if t exists in trait_scores).",
+      "5. Normalize: divide each specialization's match_score by its maximum possible score (= 3 * number_of_traits, since max weight per trait = 3 per question * up to 10 relevant questions). In practice, normalize by the highest score among all specializations.",
+      "6. Sort specializations by normalized match_score descending.",
+      "7. Return top 3 specializations as recommendations with match percentage."
+    ],
+    "tie_breaking": "If two specializations have the same score, prefer the one whose stream matches the student's declared stream (science/commerce/independent).",
+    "minimum_threshold": 0.2,
+    "minimum_threshold_note": "Specializations below 20% of max possible score should not be recommended."
+  }
+}
