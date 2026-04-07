@@ -1,510 +1,355 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MapPin, ExternalLink, GraduationCap, Star, SlidersHorizontal, X, Wifi, BookOpen, Home, Monitor, FlaskConical, ChevronDown, Search } from 'lucide-react';
- 
+import { useParams } from 'next/navigation';
+import {
+  MapPin, GraduationCap, Star, BookOpen, Building2,
+  Users, TrendingUp, Award, CheckCircle2, ChevronLeft,
+  ArrowRight, HeartHandshake, Briefcase, IndianRupee, Home, ExternalLink
+} from 'lucide-react';
 import Link from 'next/link';
 
-export const dynamic = 'force-dynamic';
-
-/* ─── Types ──────────────────────────────────────────────── */
+// Models
+interface Placement {
+  highest_lpa?: number;
+  median_lpa?: number;
+  average_lpa?: number;
+}
+interface Specialization {
+  course_id: string;
+  course_name: string;
+  stream: string;
+  specialization_id: string;
+  specialization_name: string;
+  rank_in_specialization?: number;
+  total_fee_inr?: number;
+  annual_fee_inr?: number;
+  fee_category?: string;
+  entrance_exams?: string[];
+  eligibility?: string;
+  career_paths?: string[];
+}
 interface College {
-  id: string;
+  _id: string;
   name: string;
   location: string;
-  city: string;
-  state: string;
-  distance_km: number;
-  college_type: string;
+  location_tag: string;
+  type: string;
+  affiliation?: string;
+  accreditation?: string;
+  hostel_available?: boolean;
+  hostel_fee_inr?: number;
   facilities: string[];
-  image_url: string;
+  placement_tier?: string;
+  placements?: Placement;
+  top_recruiters?: string[];
+  website?: string;
+  specializations_offered: Specialization[];
 }
 
-interface Course {
-  degree_name: string;
-  stream: string;
-  cutoff_percentage: number;
-}
-
-/* ─── Fallback data ───────────────────────────────────────── */
-const FALLBACK_COLLEGES: College[] = [
-  { id: '1', name: 'Maharaja College', location: 'Station Rd, Jaipur', city: 'Jaipur', state: 'Rajasthan', distance_km: 2.5, college_type: 'Government', facilities: ['Hostel', 'Lab', 'Library'], image_url: '' },
-  { id: '2', name: 'Government Commerce College', location: 'MI Road, Jaipur', city: 'Jaipur', state: 'Rajasthan', distance_km: 1.0, college_type: 'Government', facilities: ['Library', 'Internet', 'Cafeteria'], image_url: '' },
-  { id: '3', name: 'Government Maharani College', location: 'Chaura Rasta, Jaipur', city: 'Jaipur', state: 'Rajasthan', distance_km: 2.5, college_type: 'Government', facilities: ['Hostel', 'Lab', 'Sports'], image_url: '' },
-  { id: '4', name: 'Shri K.B. Commerce College', location: 'Tonk Road, Jaipur', city: 'Jaipur', state: 'Rajasthan', distance_km: 2.6, college_type: 'Government', facilities: ['Library', 'Lab', 'Canteen'], image_url: '' },
-  { id: '5', name: 'Rajasthan University', location: 'JLN Marg, Jaipur', city: 'Jaipur', state: 'Rajasthan', distance_km: 3.1, college_type: 'Government', facilities: ['Hostel', 'Research', 'Sports'], image_url: '' },
-  { id: '6', name: 'Shri K4. Commerce College', location: 'Vaishali Nagar, Jaipur', city: 'Jaipur', state: 'Rajasthan', distance_km: 2.6, college_type: 'Government', facilities: ['Library', 'Lab', 'Internet'], image_url: '' },
+const FALLBACK_RAW: College[] = [
+  {
+    _id: '1', name: 'ABES Engineering College', location: 'Ghaziabad', location_tag: 'ghaziabad',
+    type: 'Private Affiliated', affiliation: 'AKTU', accreditation: 'NAAC A',
+    hostel_available: true, hostel_fee_inr: 65000,
+    facilities: ['Sports', 'Library', 'Placement Cell', 'Labs'],
+    placement_tier: 'tier2',
+    placements: { highest_lpa: 28, median_lpa: 5, average_lpa: 5.5 },
+    top_recruiters: ['TCS', 'Wipro', 'Infosys'],
+    website: 'https://www.abes.ac.in',
+    specializations_offered: [
+      { course_id: 'btech', course_name: 'B.Tech', stream: 'science', specialization_id: 'btech_it', specialization_name: 'IT', rank_in_specialization: 6, total_fee_inr: 500000, annual_fee_inr: 125000, fee_category: 'mid', entrance_exams: ['JEE Main', 'UPTAC'], eligibility: '10+2 PCM, 45%+', career_paths: ['IT Consultant', 'Network Engineer'] },
+    ],
+  },
+  {
+    _id: '2', name: 'AKGEC', location: 'Ghaziabad', location_tag: 'ghaziabad',
+    type: 'Private', affiliation: 'AKTU', accreditation: 'NAAC A, NBA',
+    hostel_available: true, hostel_fee_inr: 70000,
+    facilities: ['Sports', 'Library', 'Placement Cell', 'Labs', 'Cafeteria'],
+    placement_tier: 'tier2',
+    placements: { highest_lpa: 32, median_lpa: 6, average_lpa: 6.2 },
+    top_recruiters: ['TCS', 'Wipro', 'Infosys', 'Capgemini'],
+    website: 'https://www.akgec.ac.in',
+    specializations_offered: [
+      { course_id: 'btech', course_name: 'B.Tech', stream: 'science', specialization_id: 'btech_cs', specialization_name: 'Computer Science', rank_in_specialization: 4, total_fee_inr: 520000, annual_fee_inr: 130000, fee_category: 'mid', entrance_exams: ['JEE Main', 'UPTAC'], eligibility: '10+2 PCM, 45%+', career_paths: ['Software Engineer', 'Product Manager'] },
+    ],
+  },
 ];
 
-const FALLBACK_COURSES: Record<string, Course[]> = {
-  '1': [{ degree_name: 'BA', stream: 'Science', cutoff_percentage: 72 }, { degree_name: 'B.Sc.', stream: 'Science', cutoff_percentage: 78 }],
-  '2': [{ degree_name: 'B.Com', stream: 'Commerce', cutoff_percentage: 70 }, { degree_name: 'BBA', stream: 'Commerce', cutoff_percentage: 79 }],
-  '3': [{ degree_name: 'BA', stream: 'Arts', cutoff_percentage: 80 }, { degree_name: 'B.Sc.', stream: 'Science', cutoff_percentage: 82 }, { degree_name: 'B.Com', stream: 'Commerce', cutoff_percentage: 75 }],
-  '4': [{ degree_name: 'B.Com', stream: 'Commerce', cutoff_percentage: 65 }, { degree_name: 'BBA', stream: 'Commerce', cutoff_percentage: 70 }],
-  '5': [{ degree_name: 'B.Tech', stream: 'Science', cutoff_percentage: 85 }, { degree_name: 'MBA', stream: 'Commerce', cutoff_percentage: 80 }],
-  '6': [{ degree_name: 'B.Com', stream: 'Commerce', cutoff_percentage: 68 }, { degree_name: 'BBA', stream: 'Commerce', cutoff_percentage: 72 }],
-};
+const CAMPUS_IMAGES = [
+  'https://images.unsplash.com/photo-1541178735493-479c1a27ed24?q=80&w=1200&auto=format&fit=crop', 
+  'https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=1200&auto=format&fit=crop', 
+  'https://images.unsplash.com/photo-1564069114553-7215e1ff1890?q=80&w=1200&auto=format&fit=crop', 
+  'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?q=80&w=1200&auto=format&fit=crop', 
+  'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?q=80&w=1200&auto=format&fit=crop', 
+  'https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1200&auto=format&fit=crop', 
+];
 
-/* ─── Facility icon map ──────────────────────────────────── */
-const FACILITY_ICONS: Record<string, React.ElementType> = {
-  Hostel: Home,
-  Library: BookOpen,
-  Internet: Wifi,
-  Lab: FlaskConical,
-  Canteen: Monitor,
-  default: Monitor,
-};
-
-/* ─── College illustration SVG ──────────────────────────── */
-function CollegeIllustration({ name }: { name: string }) {
-  const hue = (name.charCodeAt(0) * 17) % 360;
-  return (
-    <div
-      className="w-full h-24 rounded-2xl overflow-hidden relative flex items-end justify-center"
-      style={{ background: `linear-gradient(135deg, hsl(${hue},60%,92%) 0%, hsl(${(hue + 40) % 360},55%,88%) 100%)` }}
-    >
-      <div className="absolute bottom-0 left-0 right-0 flex items-end justify-center gap-1 px-2 pb-1">
-        <svg viewBox="0 0 160 60" className="w-full opacity-50" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" y="20" width="30" height="40" rx="2" fill={`hsl(${hue},50%,65%)`} />
-          <rect x="18" y="10" width="14" height="12" rx="1" fill={`hsl(${hue},55%,60%)`} />
-          <rect x="14" y="28" width="7" height="9" rx="1" fill="white" opacity="0.5" />
-          <rect x="29" y="28" width="7" height="9" rx="1" fill="white" opacity="0.5" />
-          <rect x="55" y="30" width="50" height="30" rx="2" fill={`hsl(${(hue + 20) % 360},48%,68%)`} />
-          <rect x="65" y="18" width="30" height="14" rx="1" fill={`hsl(${(hue + 20) % 360},52%,62%)`} />
-          <rect x="74" y="10" width="12" height="10" rx="1" fill={`hsl(${(hue + 20) % 360},55%,58%)`} />
-          <rect x="60" y="38" width="10" height="12" rx="1" fill="white" opacity="0.4" />
-          <rect x="75" y="38" width="10" height="12" rx="1" fill="white" opacity="0.4" />
-          <rect x="90" y="38" width="10" height="12" rx="1" fill="white" opacity="0.4" />
-          <rect x="120" y="25" width="30" height="35" rx="2" fill={`hsl(${(hue + 40) % 360},46%,70%)`} />
-          <rect x="127" y="36" width="7" height="9" rx="1" fill="white" opacity="0.4" />
-          <rect x="136" y="36" width="7" height="9" rx="1" fill="white" opacity="0.4" />
-          <ellipse cx="50" cy="48" rx="7" ry="9" fill="hsl(140,45%,62%)" opacity="0.7" />
-          <rect x="48" y="54" width="4" height="6" fill="hsl(30,40%,55%)" opacity="0.5" />
-          <ellipse cx="115" cy="50" rx="6" ry="8" fill="hsl(140,45%,62%)" opacity="0.7" />
-          <rect x="113" y="55" width="4" height="5" fill="hsl(30,40%,55%)" opacity="0.5" />
-        </svg>
-      </div>
-    </div>
-  );
+function getCollegeImage(name: string): string {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return CAMPUS_IMAGES[Math.abs(hash) % CAMPUS_IMAGES.length];
 }
 
-/* ─── College Card ───────────────────────────────────────── */
-function CollegeCard({
-  college,
-  collegeCourses,
-  shortlisted,
-  onToggleShortlist,
-}: {
-  college: College;
-  collegeCourses: Course[];
-  shortlisted: boolean;
-  onToggleShortlist: () => void;
-}) {
-  const degrees = Array.from(new Set(collegeCourses.map((c) => c.degree_name)));
-  const topStreams = collegeCourses.slice(0, 2);
-
-  return (
-    <div
-      className="rounded-2xl overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5"
-      style={{
-        background: 'rgba(255,255,255,0.85)',
-        backdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255,255,255,0.7)',
-        boxShadow: '0 4px 24px rgba(100,120,200,0.08)',
-      }}
-    >
-      {/* Header row */}
-      <div className="px-5 pt-5 pb-3">
-        <div className="flex items-start justify-between gap-2 mb-2">
-          <h3 className="text-base font-bold text-slate-800 leading-tight flex-1">{college.name}</h3>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <span
-              className="text-xs font-semibold px-2.5 py-1 rounded-full"
-              style={{ background: 'rgba(100,120,220,0.08)', color: '#5B7FDB', border: '1px solid rgba(100,120,220,0.15)' }}
-            >
-              {college.distance_km} km
-            </span>
-            <button onClick={onToggleShortlist} className="transition-transform hover:scale-110 active:scale-95">
-              <Star
-                className="w-4 h-4 transition-all"
-                fill={shortlisted ? '#fbbf24' : 'transparent'}
-                stroke={shortlisted ? '#fbbf24' : '#cbd5e1'}
-              />
-            </button>
-          </div>
-        </div>
-
-        {/* Degrees */}
-        <div className="flex flex-wrap items-center gap-1.5 mb-3">
-          {degrees.slice(0, 4).map((deg, i) => (
-            <span key={i} className="flex items-center gap-1 text-xs font-semibold" style={{ color: '#5B7FDB' }}>
-              <GraduationCap className="w-3 h-3" />
-              {deg}
-              {i < Math.min(degrees.length, 4) - 1 && <span className="text-slate-300 ml-0.5">,</span>}
-            </span>
-          ))}
-        </div>
-
-        {/* Facilities */}
-        <div className="flex items-center gap-2 flex-wrap">
-          {(college.facilities ?? []).slice(0, 3).map((f, i) => {
-            const FIcon = FACILITY_ICONS[f] ?? FACILITY_ICONS.default;
-            return (
-              <span
-                key={i}
-                className="flex items-center gap-1 text-xs text-slate-500 px-2 py-0.5 rounded-lg"
-                style={{ background: 'rgba(100,120,220,0.06)' }}
-              >
-                <FIcon className="w-3 h-3" style={{ color: '#7B92DB' }} />
-                {f}
-              </span>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Illustration */}
-      <div className="px-5">
-        <CollegeIllustration name={college.name} />
-      </div>
-
-      {/* Cut-off section */}
-      <div className="px-5 py-3 border-t border-slate-100/80 mt-3">
-        {topStreams.length === 0 ? (
-          <p className="text-xs text-slate-400">No cutoff data available</p>
-        ) : (
-          topStreams.map((item, i) => (
-            <div key={i} className="flex items-center justify-between text-xs mb-1.5">
-              <span className="text-slate-600 font-medium">
-                Cut-off: <span className="font-bold text-slate-800">{item.cutoff_percentage}%</span>
-              </span>
-              <span className="text-slate-400 mx-2">|</span>
-              <span className="text-slate-500">{item.stream}</span>
-              <span
-                className="ml-auto px-2 py-0.5 rounded-full font-semibold text-white text-[10px]"
-                style={{
-                  background:
-                    item.stream === 'Science'
-                      ? '#667eea'
-                      : item.stream === 'Commerce'
-                      ? '#ff8c42'
-                      : item.stream === 'Arts'
-                      ? '#f5576c'
-                      : '#11998e',
-                }}
-              >
-                {item.cutoff_percentage}%
-              </span>
-            </div>
-          ))
-        )}
-      </div>
-
-      {/* Actions */}
-      <div className="px-5 pb-5 flex items-center gap-3 mt-auto">
-        <Link
-          href={`/college-directory/${college.id}`}
-          className="flex items-center gap-1.5 text-xs font-semibold transition-colors hover:underline"
-          style={{ color: '#5B7FDB' }}
-        >
-          <ExternalLink className="w-3 h-3" />
-          Get Details
-        </Link>
-        <Link
-          href={`/college-directory/${college.id}`}
-          className="flex-1 text-center py-2.5 rounded-2xl text-white text-xs font-bold transition-all hover:opacity-90 active:scale-95"
-          style={{ background: 'linear-gradient(135deg,#667eea,#764ba2)', boxShadow: '0 4px 12px rgba(102,126,234,0.35)' }}
-        >
-          View Details
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Main Page ──────────────────────────────────────────── */
-export default function CollegeDirectoryPage() {
-  const [colleges, setColleges] = useState<College[]>(FALLBACK_COLLEGES);
-  const [courses, setCourses] = useState<Record<string, Course[]>>(FALLBACK_COURSES);
-  const [shortlisted, setShortlisted] = useState<Set<string>>(new Set());
-  const [loading] = useState(false); // never show skeleton — fallback data is always ready
-  const [search, setSearch] = useState('');
-  const [activeStream, setActiveStream] = useState<string | null>(null);
+export default function CollegeDetailsPage() {
+  const params = useParams();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
+  const [college, setCollege] = useState<College | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Try to load real Supabase data in background after render
-    (async () => {
+    async function fetchCollege() {
       try {
-        const { data: collegeData, error } = await supabase
-          .from('colleges')
-          .select('*')
-          .order('distance_km');
-
-        if (error || !collegeData || collegeData.length === 0) return;
-
-        const results = await Promise.all(
-          collegeData.map((c: College) =>
-            supabase.from('courses').select('degree_name,stream,cutoff_percentage').eq('college_id', c.id)
-          )
-        );
-        const map: Record<string, Course[]> = {};
-        collegeData.forEach((c: College, i: number) => {
-          map[c.id] = results[i].data ?? [];
-        });
-        setColleges(collegeData);
-        setCourses(map);
-      } catch {
-        // Fallback already shown — do nothing
+        setLoading(true);
+        const res = await fetch('/api/colleges');
+        if (!res.ok) throw new Error();
+        const raw: College[] = await res.json();
+        const found = raw.find(c => c._id === id);
+        if (found) setCollege(found);
+        else throw new Error("Not found");
+      } catch (err) {
+        // Fallback to sample data for preview if DB not ready
+        setCollege(FALLBACK_RAW.find(c => c._id === id) || FALLBACK_RAW[0]);
+      } finally {
+        setLoading(false);
       }
-    })();
-  }, []);
+    }
+    fetchCollege();
+  }, [id]);
 
-  const toggleShortlist = (id: string) => {
-    setShortlisted((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  };
+  if (loading) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh] space-y-4">
+         <div className="w-12 h-12 border-4 border-[#4A68C8] border-t-transparent rounded-full animate-spin"></div>
+         <p className="text-slate-500 font-medium">Brewing institution records...</p>
+      </div>
+    );
+  }
 
-  const filtered = colleges.filter((c) => {
-    const matchSearch =
-      c.name.toLowerCase().includes(search.toLowerCase()) ||
-      (c.city ?? '').toLowerCase().includes(search.toLowerCase());
-    const collegeCourses = courses[c.id] ?? [];
-    const matchStream = !activeStream || collegeCourses.some((cr) => cr.stream === activeStream);
-    return matchSearch && matchStream;
-  });
+  if (!college) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center min-h-[60vh]">
+         <h1 className="text-3xl font-black text-slate-800">Campus Not Found</h1>
+         <Link href="/college-directory" className="mt-4 text-[#4A68C8] hover:underline font-bold flex items-center gap-2">
+           <ChevronLeft className="w-4 h-4"/> Back to Directory
+         </Link>
+      </div>
+    );
+  }
 
-  const shortlistedColleges = colleges.filter((c) => shortlisted.has(c.id));
-  const streams = ['Science', 'Arts', 'Commerce', 'Vocational'];
+  const imageUrl = getCollegeImage(college.name);
 
   return (
-    <div className="space-y-5">
+    <div className="max-w-[1400px] mx-auto pb-20 space-y-8 animate-in fade-in duration-500">
+       
+       <Link href="/college-directory" className="inline-flex items-center gap-2 text-slate-500 hover:text-[#4A68C8] font-bold text-sm bg-white/50 backdrop-blur-md px-4 py-2 rounded-full border border-slate-200 shadow-sm transition-all hover:bg-white hover:-translate-x-1">
+         <ChevronLeft className="w-4 h-4" /> Directory Search
+       </Link>
 
-      {/* ── Hero ── */}
-      <div
-        className="rounded-3xl p-7 relative overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg,#667eea 0%,#764ba2 50%,#f5576c 100%)',
-          boxShadow: '0 20px 60px rgba(102,126,234,0.3)',
-        }}
-      >
-        <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full opacity-20" style={{ background: 'rgba(255,255,255,0.5)' }} />
-        <div className="absolute bottom-0 left-[40%] w-28 h-28 rounded-full opacity-10" style={{ background: 'rgba(255,255,255,0.6)' }} />
-        <div className="relative z-10 flex items-start justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <GraduationCap className="w-4 h-4 text-white/80" />
-              <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Learnthru</span>
-            </div>
-            <h1 className="text-3xl font-black text-white leading-tight mb-2">College Directory</h1>
-            <p className="text-white/80 text-sm leading-relaxed max-w-lg">
-              Find nearby government colleges offering the courses you&apos;re interested in.
-            </p>
-          </div>
-          <div
-            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl flex-shrink-0"
-            style={{ background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)' }}
-          >
-            <MapPin className="w-4 h-4 text-white/80" />
-            <span className="text-white text-sm font-semibold">Jaipur, Rajasthan</span>
-          </div>
-        </div>
-      </div>
+       {/* HERO BANNER SECTION (Gradient & SVG Objects styled like Dashboard) */}
+       <div className="relative rounded-[2.5rem] overflow-hidden min-h-[360px] flex items-end p-8 md:p-12 shadow-xl group border border-white/40"
+         style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #3730A3 35%, #4F46E5 70%, #8B5CF6 100%)' }}>
+          
+          {/* Layered decorative orbs */}
+          <div className="absolute -top-10 -left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/4 left-1/2 w-40 h-40 bg-indigo-300/20 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-1000" />
+          <div className="absolute -bottom-12 right-1/4 w-56 h-56 bg-purple-400/20 rounded-full blur-3xl pointer-events-none" />
 
-      {/* ── Filters row ── */}
-      <div className="flex flex-wrap items-center gap-3">
-        {/* Search */}
-        <div className="relative flex-1 min-w-[200px]">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search colleges..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-2xl text-sm text-slate-700 outline-none transition-all"
-            style={{
-              background: 'rgba(255,255,255,0.9)',
-              backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255,255,255,0.6)',
-              boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
-            }}
+          {/* Dot grid pattern */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none"
+            style={{ backgroundImage: 'radial-gradient(circle, white 1.5px, transparent 1.5px)', backgroundSize: '32px 32px' }}
           />
-        </div>
 
-        {/* Location chip */}
-        <button
-          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold text-slate-600 transition-all hover:shadow-md"
-          style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.6)' }}
-        >
-          <MapPin className="w-4 h-4" style={{ color: '#5B7FDB' }} />
-          Location <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
-        </button>
-
-        {/* Degree filter */}
-        <button
-          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold text-slate-600 transition-all hover:shadow-md"
-          style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.6)' }}
-        >
-          <GraduationCap className="w-4 h-4" style={{ color: '#5B7FDB' }} />
-          Degree Programs: BA, B.Sc., B.Com, B.Tech <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
-        </button>
-
-        {/* Advanced filters */}
-        <button
-          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-bold transition-all hover:shadow-md"
-          style={{ background: 'rgba(102,126,234,0.1)', color: '#667eea', border: '1px solid rgba(102,126,234,0.2)' }}
-        >
-          <SlidersHorizontal className="w-4 h-4" />
-          Advanced Filters
-        </button>
-
-        {(search || activeStream) && (
-          <button
-            onClick={() => { setSearch(''); setActiveStream(null); }}
-            className="flex items-center gap-1.5 px-3 py-2.5 rounded-2xl text-sm font-semibold transition-all"
-            style={{ color: '#f5576c', background: 'rgba(245,87,108,0.08)', border: '1px solid rgba(245,87,108,0.15)' }}
-          >
-            <X className="w-3.5 h-3.5" /> Clear
-          </button>
-        )}
-      </div>
-
-      {/* ── Stream tabs ── */}
-      <div className="flex items-center gap-2 flex-wrap">
-        {streams.map((s) => (
-          <button
-            key={s}
-            onClick={() => setActiveStream(activeStream === s ? null : s)}
-            className="px-4 py-2 rounded-full text-sm font-bold transition-all"
-            style={
-              activeStream === s
-                ? { background: 'linear-gradient(135deg,#667eea,#764ba2)', color: 'white', boxShadow: '0 4px 12px rgba(102,126,234,0.35)' }
-                : { background: 'rgba(255,255,255,0.85)', color: '#94a3b8', border: '1px solid rgba(255,255,255,0.6)' }
-            }
-          >
-            {s}
-          </button>
-        ))}
-        <div className="flex items-center gap-1.5 ml-2 text-sm text-slate-500">
-          <MapPin className="w-3.5 h-3.5" style={{ color: '#5B7FDB' }} />
-          Jaipur, Rajasthan
-        </div>
-        <span className="ml-auto text-sm font-semibold text-slate-500">{filtered.length} colleges found</span>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
-        {/* ── Cards grid ── */}
-        <div className="lg:col-span-2">
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="h-72 rounded-2xl animate-pulse" style={{ background: 'rgba(255,255,255,0.6)' }} />
-              ))}
-            </div>
-          ) : filtered.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 rounded-2xl"
-              style={{ background: 'rgba(255,255,255,0.6)', border: '1px dashed rgba(102,126,234,0.2)' }}>
-              <GraduationCap className="w-10 h-10 mb-3 opacity-30" style={{ color: '#667eea' }} />
-              <p className="text-slate-400 text-sm font-medium">No colleges found matching your filters</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {filtered.map((college) => (
-                <CollegeCard
-                  key={college.id}
-                  college={college}
-                  collegeCourses={courses[college.id] ?? []}
-                  shortlisted={shortlisted.has(college.id)}
-                  onToggleShortlist={() => toggleShortlist(college.id)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* ── Shortlist sidebar ── */}
-        <div className="space-y-4">
-          <div
-            className="rounded-2xl p-5"
-            style={{
-              background: 'rgba(255,255,255,0.9)',
-              backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255,255,255,0.7)',
-              boxShadow: '0 4px 24px rgba(100,120,200,0.08)',
-            }}
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <Star className="w-4 h-4 text-yellow-400" fill="#fbbf24" />
-              <h3 className="font-black text-slate-800 text-base">Shortlist</h3>
-            </div>
-            {shortlistedColleges.length === 0 ? (
-              <p className="text-sm text-slate-400 text-center py-4">Star a college to add it here</p>
-            ) : (
-              <div className="space-y-2">
-                {shortlistedColleges.map((c) => (
-                  <div key={c.id} className="flex items-center justify-between gap-2 py-2 border-b border-slate-100 last:border-0">
-                    <span className="text-sm font-medium text-slate-700 flex-1 leading-tight">{c.name}</span>
-                    <button onClick={() => toggleShortlist(c.id)}>
-                      <Star className="w-4 h-4" fill="#fbbf24" stroke="#fbbf24" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-            {shortlistedColleges.length > 0 && (
-              <button
-                className="w-full mt-4 py-2.5 rounded-2xl text-sm font-bold transition-all hover:opacity-90"
-                style={{ background: 'linear-gradient(135deg,#667eea,#764ba2)', color: 'white' }}
-              >
-                View Shortlist
-              </button>
-            )}
+          {/* Floating Decorative Book SVG inline */}
+          <div className="absolute top-10 right-10 w-48 h-48 opacity-20 pointer-events-none select-none hidden md:block">
+            <svg viewBox="0 0 280 190" className="w-full h-full animate-[bounce_5s_ease-in-out_infinite]">
+              <path d="M178 90 Q148 88 142 95 L142 145 Q148 140 178 142 Z" fill="white" />
+              <path d="M182 90 Q212 88 218 95 L218 145 Q212 140 182 142 Z" fill="white" />
+              <circle cx="218" cy="95" r="4" fill="#FCD34D" />
+              <circle cx="142" cy="70" r="3" fill="#C4B5FD" />
+            </svg>
           </div>
-
-          {/* Active filters display */}
-          <div
-            className="rounded-2xl p-5"
-            style={{
-              background: 'rgba(255,255,255,0.9)',
-              backdropFilter: 'blur(16px)',
-              border: '1px solid rgba(255,255,255,0.7)',
-              boxShadow: '0 4px 24px rgba(100,120,200,0.08)',
-            }}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <SlidersHorizontal className="w-4 h-4" style={{ color: '#667eea' }} />
-              <h3 className="font-black text-slate-800 text-base">Active Filters</h3>
+          
+          <div className="relative z-10 w-full flex flex-col justify-end">
+            <div className="flex flex-wrap gap-2 mb-4">
+               {college.accreditation && (
+                 <span className="px-3 py-1 bg-white/10 text-amber-300 border border-white/20 rounded-full text-[11px] font-black uppercase tracking-wider backdrop-blur-md flex items-center gap-1.5 shadow-sm">
+                   <Award className="w-3.5 h-3.5" /> {college.accreditation}
+                 </span>
+               )}
+               {college.placement_tier && (
+                 <span className="px-3 py-1 bg-white/10 text-emerald-300 border border-white/20 rounded-full text-[11px] font-black uppercase tracking-wider backdrop-blur-md flex items-center gap-1.5 shadow-sm">
+                   <TrendingUp className="w-3.5 h-3.5" /> {college.placement_tier.replace('tier', 'Tier ')}
+                 </span>
+               )}
             </div>
-            <div className="flex flex-wrap gap-2">
-              <span
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-                style={{ background: 'rgba(102,126,234,0.1)', color: '#667eea', border: '1px solid rgba(102,126,234,0.2)' }}
-              >
-                <MapPin className="w-3 h-3" /> Jaipur, Rajasthan
-              </span>
-              {activeStream && (
-                <span
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-                  style={{ background: 'rgba(102,126,234,0.1)', color: '#667eea', border: '1px solid rgba(102,126,234,0.2)' }}
-                >
-                  {activeStream}
-                  <button onClick={() => setActiveStream(null)}>
-                    <X className="w-3 h-3" />
-                  </button>
-                </span>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 tracking-tight drop-shadow-sm">
+              {college.name}
+            </h1>
+            <div className="flex flex-wrap items-center gap-4 text-white/80 font-medium">
+              <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm"><MapPin className="w-4 h-4 text-rose-300" /> {college.location}</div>
+              <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm text-blue-200"><Building2 className="w-4 h-4" /> {college.type}</div>
+              {college.affiliation && (
+                <div className="bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 backdrop-blur-sm text-purple-200">Affiliated with {college.affiliation}</div>
               )}
-              <span
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-                style={{ background: 'rgba(245,87,108,0.08)', color: '#f5576c', border: '1px solid rgba(245,87,108,0.15)' }}
-              >
-                75% &amp; below
-              </span>
             </div>
           </div>
-        </div>
-      </div>
+       </div>
+
+       {/* CONTENT GRID */}
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* LEFT COLUMN: Overview & Courses */}
+          <div className="lg:col-span-2 space-y-8">
+             
+             {/* General Info / About */}
+             <div className="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-sm relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-bl-[100px] -z-0"></div>
+                <h2 className="text-2xl font-black text-slate-800 flex items-center gap-3 mb-4 relative z-10">
+                  <HeartHandshake className="w-6 h-6 text-[#4A68C8]" /> About {college.name}
+                </h2>
+                <div className="relative z-10 text-[15px] leading-relaxed text-slate-600 space-y-4 font-medium">
+                  <p>
+                    Established as a premier institution in <span className="text-slate-800 font-bold">{college.location}</span>, {college.name} serves as a pivotal center for rigorous academic training. Classified as a <span className="text-slate-800 font-bold">{college.type}</span> institution{college.affiliation ? ` under ${college.affiliation}` : ''}, it has cemented its position as a powerhouse of education focusing on practical placements and holistic curriculum.
+                  </p>
+                  <p>
+                    With its stellar placement tier categorization (<span className="text-indigo-600 font-bold uppercase">{college.placement_tier ?? 'Reputed'}</span>) and highly modern facilities, it currently educates thousands of motivated students. Prepare for a comprehensive campus life surrounded by peers focused on engineering, arts, and management pathways. 
+                  </p>
+                </div>
+             </div>
+             
+             {/* Courses & Specializations */}
+             <div className="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-black text-slate-800 flex items-center gap-3">
+                    <GraduationCap className="w-7 h-7 text-[#4A68C8]" /> Degrees &amp; Specializations
+                  </h2>
+                </div>
+                
+                {college.specializations_offered?.length > 0 ? (
+                  <div className="space-y-4">
+                    {college.specializations_offered.map((spec, i) => (
+                      <div key={i} className="flex flex-col md:flex-row md:items-center justify-between p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-[#7B92DB]/50 transition-colors group">
+                         <div className="mb-4 md:mb-0">
+                           <div className="flex items-center gap-2 mb-1">
+                             <h4 className="text-[17px] font-bold text-slate-800">{spec.course_name} <span className="text-slate-400 font-medium">in {spec.specialization_name}</span></h4>
+                           </div>
+                           <p className="text-[13px] text-slate-500 font-medium flex items-center gap-4 mt-2">
+                             {spec.eligibility && <span className="flex items-center gap-1"><CheckCircle2 className="w-3.5 h-3.5 text-emerald-500"/> {spec.eligibility}</span>}
+                             {spec.entrance_exams && <span className="flex items-center gap-1"><BookOpen className="w-3.5 h-3.5 text-[#4A68C8]"/> {spec.entrance_exams.join(', ')}</span>}
+                           </p>
+                         </div>
+                         <div className="md:text-right shrink-0">
+                           <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Annual Fee</p>
+                           <p className="text-xl font-black text-[#4A68C8]">
+                             {spec.annual_fee_inr ? `₹${spec.annual_fee_inr.toLocaleString()}` : 'Contact for Info'}
+                           </p>
+                         </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-8 text-center bg-slate-50 rounded-2xl border border-slate-200 border-dashed">
+                     <p className="text-slate-500 font-medium">Course details are currently being updated by the administration.</p>
+                  </div>
+                )}
+             </div>
+
+             {/* Facilities */}
+             <div className="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-sm">
+                <h2 className="text-2xl font-black text-slate-800 flex items-center gap-3 mb-6">
+                  <Home className="w-7 h-7 text-[#4A68C8]" /> Campus Facilities
+                </h2>
+                <div className="flex flex-wrap gap-3">
+                  {college.facilities?.map((f, i) => (
+                    <div key={i} className="px-5 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 font-bold text-[14px]">
+                      {f}
+                    </div>
+                  ))}
+                  {(!college.facilities || college.facilities.length === 0) && (
+                    <p className="text-slate-500">Standard campus amenities available.</p>
+                  )}
+                  {college.hostel_available && (
+                    <div className="px-5 py-3 rounded-xl bg-indigo-50 border border-[#7B92DB]/30 text-indigo-700 font-bold text-[14px] flex items-center gap-2">
+                      <Home className="w-4 h-4"/> On-Campus Hostel ({college.hostel_fee_inr ? `₹${college.hostel_fee_inr}/yr` : 'Available'})
+                    </div>
+                  )}
+                </div>
+             </div>
+
+          </div>
+
+          {/* RIGHT COLUMN: Sidebar Stats */}
+          <div className="space-y-8 lg:sticky lg:top-24 h-max pb-10">
+             
+             {/* Placement Stats */}
+             <div className="bg-gradient-to-br from-[#4A68C8] to-[#3B82F6] rounded-[2rem] p-8 text-white shadow-xl shadow-blue-500/20">
+               <h3 className="text-lg font-black flex items-center gap-2 mb-6 text-white/90">
+                 <Briefcase className="w-5 h-5"/> Placement Records
+               </h3>
+               
+               <div className="space-y-6">
+                 <div className="bg-white/10 p-5 rounded-2xl backdrop-blur-sm border border-white/20">
+                   <p className="text-[11px] font-bold uppercase tracking-widest text-blue-200 mb-1">Highest Package</p>
+                   <p className="text-4xl font-black">
+                     {college.placements?.highest_lpa ? `₹${college.placements.highest_lpa} LPA` : 'Unspecified'}
+                   </p>
+                 </div>
+                 
+                 <div className="grid grid-cols-2 gap-4">
+                   <div className="bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/20">
+                     <p className="text-[10px] font-bold uppercase tracking-widest text-blue-200 mb-1">Median</p>
+                     <p className="text-xl font-bold">
+                       {college.placements?.median_lpa ? `₹${college.placements.median_lpa}L` : '—'}
+                     </p>
+                   </div>
+                   <div className="bg-white/10 p-4 rounded-2xl backdrop-blur-sm border border-white/20">
+                     <p className="text-[10px] font-bold uppercase tracking-widest text-blue-200 mb-1">Average</p>
+                     <p className="text-xl font-bold">
+                       {college.placements?.average_lpa ? `₹${college.placements.average_lpa}L` : '—'}
+                     </p>
+                   </div>
+                 </div>
+               </div>
+             </div>
+
+             {/* Top Recruiters */}
+             {college.top_recruiters && college.top_recruiters.length > 0 && (
+               <div className="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-sm">
+                  <h3 className="text-lg font-black flex items-center gap-2 mb-6 text-slate-800">
+                    <Users className="w-5 h-5 text-[#4A68C8]"/> Past Top Recruiters
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {college.top_recruiters.map((r, i) => (
+                      <span key={i} className="px-3.5 py-1.5 bg-slate-100 text-slate-600 font-bold text-[13px] rounded-lg">
+                        {r}
+                      </span>
+                    ))}
+                  </div>
+               </div>
+             )}
+
+             {/* Outbound Link */}
+             <div className="bg-white rounded-[2rem] p-6 border border-slate-200 shadow-sm flex flex-col items-center text-center">
+                 <div className="w-12 h-12 bg-[#E8ECF5] text-[#4A68C8] rounded-full flex items-center justify-center mb-3">
+                   <ExternalLink className="w-6 h-6" />
+                 </div>
+                 <h3 className="font-bold text-slate-800 mb-1">Official Website</h3>
+                 <p className="text-sm text-slate-500 mb-4 px-4">Visit the official college website for admission forms.</p>
+                 {college.website ? (
+                   <a href={college.website} target="_blank" rel="noopener noreferrer" className="w-full block py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold transition-colors">
+                     Open Website
+                   </a>
+                 ) : (
+                   <button disabled className="w-full py-3 rounded-xl bg-slate-100 text-slate-400 font-bold cursor-not-allowed">
+                     Link Not Available
+                   </button>
+                 )}
+             </div>
+
+          </div>
+       </div>
     </div>
   );
 }

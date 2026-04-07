@@ -6,9 +6,10 @@ import {
   FlaskConical, Palette, TrendingUp, Wrench,
   ChevronDown, ArrowRight, BookOpen, Star, Zap,
   Microscope, Calculator, Music, Landmark, Briefcase,
-  HeartPulse, Cpu, PenTool,
+  HeartPulse, Cpu, PenTool, Activity, Users, Target, Clock, Laptop
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,45 +18,39 @@ interface CareerPath {
   id: string;
   title: string;
   stream: string;
-  degree_required: string;
   description: string;
+  long_description: string;
   preparation_for: string[];
   job_opportunities: string[];
+  slug: string;
+  salary: string;
+  demand: string;
 }
 
-/* ─── Static fallback data (shown when DB is empty / loading) */
+/* ─── Vastly Expanded Data ─────────────────────────── */
 const FALLBACK: Record<string, CareerPath[]> = {
   Science: [
-    { id: '1', title: 'Software Developer', stream: 'Science', degree_required: 'B.Sc. Computer Science', description: 'Build software applications and systems', preparation_for: ['GATE', 'Private IT Firms', 'Startups'], job_opportunities: ['Google', 'Infosys', 'TCS'] },
-    { id: '2', title: 'Data Scientist', stream: 'Science', degree_required: 'B.Sc. Computer Science', description: 'Analyse large datasets to derive insights', preparation_for: ['M.Sc.', 'Private Firms', 'Govt. Research'], job_opportunities: ['Amazon', 'Flipkart', 'ISRO'] },
-    { id: '3', title: 'Artificial Intelligence Engineer', stream: 'Science', degree_required: 'B.Sc. Computer Science', description: 'Design AI/ML systems and models', preparation_for: ['GATE', 'IIT-JAM', 'Tech Companies'], job_opportunities: ['Microsoft', 'OpenAI', 'DeepMind'] },
-    { id: '4', title: 'Web Developer', stream: 'Science', degree_required: 'B.Sc. Computer Science', description: 'Build responsive websites and web apps', preparation_for: ['GATE', 'IT Companies', 'Startups'], job_opportunities: ['Wipro', 'HCL', 'Freelance'] },
-    { id: '5', title: 'Game Developer', stream: 'Science', degree_required: 'B.Sc. Computer Science', description: 'Create video games for multiple platforms', preparation_for: ['GATE', 'Game Studios', 'Indie Dev'], job_opportunities: ['Ubisoft', 'EA', 'Rockstar'] },
-    { id: '6', title: 'Cybersecurity Analyst', stream: 'Science', degree_required: 'B.Sc. Computer Science', description: 'Protect systems from digital threats', preparation_for: ['GATE', 'DRDO', 'Tech Firms'], job_opportunities: ['ISRO', 'NIC', 'Cisco'] },
+    { id: '1', slug: 'software-developer', title: 'Software Developer', stream: 'Science', description: 'Architect digital systems and logic gateways.', long_description: 'Software Engineers command the highest scalability leverage today. They write logical constructs that deploy globally across cloud infrastructure to millions of users instantly.', preparation_for: ['Cloud Infrastructure', 'Tech Startups', 'Fintech Architecture'], job_opportunities: ['Google', 'Microsoft', 'Atlassian', 'Startups'], salary: '₹8L - ₹24L', demand: 'Exponential' },
+    { id: '2', slug: 'data-scientist', title: 'Data Scientist', stream: 'Science', description: 'Analyze complex unstructured algorithms.', long_description: 'Data Scientists convert raw noise into actionable corporate strategy. Utilizing neural networks and Python libraries, they predict market conditions before they happen.', preparation_for: ['Machine Learning', 'Quantitative Trading', 'Predictive Analysis'], job_opportunities: ['Amazon', 'Flipkart', 'Bridgewater'], salary: '₹10L - ₹20L', demand: 'Very High' },
+    { id: '3', slug: 'medical-professional', title: 'Clinical Surgeon / Doctor', stream: 'Science', description: 'Advanced anatomical preservation and surgery.', long_description: 'At the apex of human biology, surgeons operate at the razor-edge of anatomical science, requiring profound academic resilience and extreme steady-handed precision.', preparation_for: ['Surgery prep', 'Hospital Logistics', 'Trauma Care'], job_opportunities: ['AIIMS', 'Apollo Hospitals', 'Max Healthcare'], salary: '₹12L - ₹35L', demand: 'Critical' },
+    { id: '4', slug: 'mechanical-engineer', title: 'Mechanical Engineer', stream: 'Science', description: 'Design structural kinematic machinery.', long_description: 'Responsible for the physical kinetic systems of reality. From thermodynamic propulsion in SpaceX rockets to the suspension in Tesla vehicles, they build motion.', preparation_for: ['Aerospace Systems', 'Automotive R&D', 'Robotics Hardware'], job_opportunities: ['Tata Motors', 'Boeing', 'SpaceX'], salary: '₹6L - ₹15L', demand: 'Steady' },
+    { id: '5', slug: 'lab-technician', title: 'Laboratory Research Tech', stream: 'Science', description: 'Sequence DNA and execute bio-assays.', long_description: 'The foundation of the pharmaceutical supply chain. Technicians operate spectrometers and centrifuges to maintain the integrity of clinical trials and drug research.', preparation_for: ['Pharmacology', 'Genetics Research', 'Epidemiology'], job_opportunities: ['Sun Pharma', 'Dr. Reddy’s', 'CSIR'], salary: '₹4L - ₹8L', demand: 'Steady' }
   ],
   Arts: [
-    { id: '7', title: 'Graphic Designer', stream: 'Arts', degree_required: 'B.F.A.', description: 'Create visual content for brands', preparation_for: ['Design Agencies', 'Ad Firms', 'Freelance'], job_opportunities: ['WPP', 'Ogilvy', 'Publicis'] },
-    { id: '8', title: 'Content Writer', stream: 'Arts', degree_required: 'B.A. English', description: 'Craft engaging written content', preparation_for: ['Media Houses', 'Publishing', 'Digital'], job_opportunities: ['HarperCollins', 'TOI', 'BuzzFeed'] },
-    { id: '9', title: 'Film Director', stream: 'Arts', degree_required: 'B.F.A.', description: 'Direct films and visual narratives', preparation_for: ['FTII', 'Film Studios', 'OTT'], job_opportunities: ['Bollywood', 'Netflix', 'Amazon Prime'] },
-    { id: '10', title: 'UX Designer', stream: 'Arts', degree_required: 'B.Des', description: 'Design user-centred digital experiences', preparation_for: ['Design Bootcamps', 'Tech Firms', 'Agencies'], job_opportunities: ['Google', 'Swiggy', 'Zomato'] },
-    { id: '11', title: 'Journalist', stream: 'Arts', degree_required: 'B.A. Journalism', description: 'Report and investigate news stories', preparation_for: ['IIMC', 'Media Houses', 'Freelance'], job_opportunities: ['NDTV', 'The Hindu', 'Reuters'] },
-    { id: '12', title: 'Musician', stream: 'Arts', degree_required: 'B.Music', description: 'Compose and perform music professionally', preparation_for: ['Music Labels', 'Film Industry', 'Teaching'], job_opportunities: ['T-Series', 'Sony Music', 'Spotify'] },
+    { id: '6', slug: 'ui-ux-designer', title: 'UI/UX Interactive Designer', stream: 'Arts', description: 'Bridge deep psychology with interface design.', long_description: 'Designers dictate the flow of the digital economy. They understand spatial typography and cognitive load in order to create frictionless technology platforms.', preparation_for: ['Product Design', 'Human-Computer Interaction', 'Wireframing'], job_opportunities: ['Apple', 'Spotify', 'Zoho', 'CRED'], salary: '₹7L - ₹18L', demand: 'Very High' },
+    { id: '7', slug: 'counsellor', title: 'Clinical Psychologist', stream: 'Arts', description: 'Diagnose and map human behavioral patterns.', long_description: 'Dealing comprehensively with the human mind. They prescribe structural wellness routines and unblock severe neurological traumas using deep empathy and DSM-5 mapping.', preparation_for: ['Corporate Wellness', 'Clinical Practice', 'Rehabilitation'], job_opportunities: ['Fortis', 'BetterHelp', 'Independent Practice'], salary: '₹5L - ₹12L', demand: 'Rapidly Rising' },
+    { id: '8', slug: 'film-director', title: 'Film / Creative Director', stream: 'Arts', description: 'Architect visual narratives at scale.', long_description: 'Creative Directors synthesize massive teams of artists, editors, and actors to produce high-leverage digital content across film, television, and advertising.', preparation_for: ['Cinematography', 'Script Architecture', 'Post-Production'], job_opportunities: ['Netflix', 'Amazon Studios', 'Ogilvy'], salary: '₹6L - ₹25L+', demand: 'High' },
+    { id: '9', slug: 'journalist', title: 'Investigative Journalist', stream: 'Arts', description: 'Report asymmetric truths and global news.', long_description: 'Journalists track the nervous system of modern society. They hold institutions accountable and write long-form data-backed socio-political analysis.', preparation_for: ['Data Journalism', 'Broadcasting', 'Publishing'], job_opportunities: ['Reuters', 'The Hindu', 'Al Jazeera'], salary: '₹4L - ₹10L', demand: 'Moderate' }
   ],
   Commerce: [
-    { id: '13', title: 'Chartered Accountant', stream: 'Commerce', degree_required: 'B.Com', description: 'Manage accounts, audits and taxation', preparation_for: ['CA Exams', 'Big 4 Firms', 'Govt'], job_opportunities: ['Deloitte', 'KPMG', 'EY'] },
-    { id: '14', title: 'Investment Banker', stream: 'Commerce', degree_required: 'BBA', description: 'Manage large financial transactions', preparation_for: ['MBA Finance', 'SEBI', 'Banks'], job_opportunities: ['Goldman Sachs', 'JP Morgan', 'HDFC'] },
-    { id: '15', title: 'Marketing Manager', stream: 'Commerce', degree_required: 'BBA', description: 'Drive brand growth and campaigns', preparation_for: ['MBA Marketing', 'Agencies', 'FMCG'], job_opportunities: ['HUL', 'P&G', 'Nestle'] },
-    { id: '16', title: 'Entrepreneur', stream: 'Commerce', degree_required: 'BBA', description: 'Build and scale your own business', preparation_for: ['Startup Incubators', 'VC Funding', 'IIM'], job_opportunities: ['Own Startup', 'Accelerators', 'CXO Roles'] },
-    { id: '17', title: 'Financial Analyst', stream: 'Commerce', degree_required: 'B.Com', description: 'Analyse financial data and investments', preparation_for: ['CFA', 'SEBI', 'Mutual Funds'], job_opportunities: ['Motilal Oswal', 'Zerodha', 'ICICI'] },
-    { id: '18', title: 'HR Manager', stream: 'Commerce', degree_required: 'BBA', description: 'Manage talent and organisational culture', preparation_for: ['MBA HR', 'Corporates', 'Consulting'], job_opportunities: ['Infosys', 'TCS', 'Accenture'] },
+    { id: '10', slug: 'financial-analyst', title: 'Financial Analyst', stream: 'Commerce', description: 'Model corporate trajectories and cap tables.', long_description: 'Analysts build multi-variable Excel spreadsheets to predict the future pricing of markets and allocate billions in venture or banking capital accurately.', preparation_for: ['Venture Capital', 'Investment Banking', 'Actuarial Science'], job_opportunities: ['Goldman Sachs', 'Morgan Stanley', 'Deloitte'], salary: '₹8L - ₹20L', demand: 'Very High' },
+    { id: '11', slug: 'chartered-accountant', title: 'Chartered Accountant (CA)', stream: 'Commerce', description: 'Audit, tax compliance, and structural finance.', long_description: 'CAs act as the absolute quantitative truth for national businesses. They manage enormous corporate tax profiles and maintain the audited backbone of the economy.', preparation_for: ['Big 4 Auditing', 'Corporate Taxation', 'Forensic Accounting'], job_opportunities: ['KPMG', 'EY', 'PwC', 'Government'], salary: '₹9L - ₹18L', demand: 'Constant' },
+    { id: '12', slug: 'marketing-manager', title: 'Growth Marketing Lead', stream: 'Commerce', description: 'Engineer viral acquisition mechanisms.', long_description: 'Marketers manage advertising spend across Google and Meta. They calculate Customer Acquisition Costs (CAC) to aggressively scale product revenue.', preparation_for: ['Performance Marketing', 'Brand Scaling', 'B2B Analytics'], job_opportunities: ['HUL', 'P&G', 'Tech Startups'], salary: '₹7L - ₹16L', demand: 'High' }
   ],
   Vocational: [
-    { id: '19', title: 'Electrician', stream: 'Vocational', degree_required: 'ITI', description: 'Install and maintain electrical systems', preparation_for: ['NSDC Exams', 'PSUs', 'Contracting'], job_opportunities: ['BSNL', 'NTPC', 'Construction'] },
-    { id: '20', title: 'Chef', stream: 'Vocational', degree_required: 'Hotel Management', description: 'Create culinary experiences in hospitality', preparation_for: ['Hotel Chains', 'Restaurants', 'Catering'], job_opportunities: ['Taj Hotels', 'ITC', 'Marriott'] },
-    { id: '21', title: 'Nursing Assistant', stream: 'Vocational', degree_required: 'GNM', description: 'Provide patient care in healthcare settings', preparation_for: ['Hospitals', 'Clinics', 'NGOs'], job_opportunities: ['AIIMS', 'Apollo', 'Fortis'] },
-    { id: '22', title: 'Automobile Technician', stream: 'Vocational', degree_required: 'ITI', description: 'Service and repair vehicles', preparation_for: ['NSDC', 'Auto Companies', 'Dealerships'], job_opportunities: ['Maruti', 'Tata Motors', 'Bosch'] },
-    { id: '23', title: 'Fashion Designer', stream: 'Vocational', degree_required: 'NIFT', description: 'Design clothing and fashion collections', preparation_for: ['NIFT Exam', 'Fashion Houses', 'Retail'], job_opportunities: ['Fab India', 'Myntra', 'Freelance'] },
-    { id: '24', title: 'Photographer', stream: 'Vocational', degree_required: 'Mass Media', description: 'Capture professional photography', preparation_for: ['Journalism', 'Agencies', 'Events'], job_opportunities: ['Getty Images', 'News Agencies', 'Freelance'] },
+    { id: '13', slug: 'electrician', title: 'Industrial Electrician', stream: 'Vocational', description: 'Maintain extreme high-voltage infrastructure.', long_description: 'Vital for running modern smart cities. Electricians manage advanced grid distributions, solar panel installations, and internal corporate circuitry.', preparation_for: ['Smart Grid Tech', 'Green Energy Solar', 'Commercial Real Estate'], job_opportunities: ['Siemens', 'NTPC', 'L&T'], salary: '₹3L - ₹6L', demand: 'Stable' },
+    { id: '14', slug: 'chef', title: 'Executive Culinary Chef', stream: 'Vocational', description: 'Operate high-end hospitality kitchens.', long_description: 'Chefs manage intense supply logistics, team dynamics under extreme pressure, and coordinate precise nutritional architecture at a massive scale.', preparation_for: ['Luxury Hotels', 'Michelin Systems', 'Global Franchising'], job_opportunities: ['Taj Group', 'Marriott', 'ITC Hotels'], salary: '₹4L - ₹12L', demand: 'Stable' },
+    { id: '15', slug: 'fashion-designer', title: 'Fashion Technologist', stream: 'Vocational', description: 'Design sustainable textile systems.', long_description: 'Fashion designers integrate fabric theory with mass production capabilities to create globally moving consumer apparel.', preparation_for: ['Haute Couture', 'Retail Chains', 'Sustainable Fabrics'], job_opportunities: ['Myntra', 'Zara India', 'Boutique Labels'], salary: '₹5L - ₹14L', demand: 'High' }
   ],
 };
 
@@ -63,87 +58,43 @@ const FALLBACK: Record<string, CareerPath[]> = {
 const ICON_MAP: Record<string, any> = {
   'Software Developer': Code,
   'Data Scientist': Database,
-  'Artificial Intelligence Engineer': Bot,
-  'Web Developer': Globe,
-  'Game Developer': Gamepad2,
-  'Cybersecurity Analyst': Shield,
-  'Graphic Designer': PenTool,
-  'Content Writer': BookOpen,
-  'Film Director': Zap,
-  'UX Designer': Cpu,
-  'Journalist': Globe,
-  'Musician': Music,
-  'Chartered Accountant': Calculator,
-  'Investment Banker': Landmark,
-  'Marketing Manager': TrendingUp,
-  'Entrepreneur': Briefcase,
+  'Clinical Surgeon / Doctor': HeartPulse,
+  'Mechanical Engineer': Wrench,
+  'Laboratory Research Tech': FlaskConical,
+  'UI/UX Interactive Designer': Laptop,
+  'Clinical Psychologist': Activity,
+  'Film / Creative Director': Zap,
+  'Investigative Journalist': Globe,
   'Financial Analyst': TrendingUp,
-  'HR Manager': Briefcase,
-  'Electrician': Wrench,
-  'Chef': Zap,
-  'Nursing Assistant': HeartPulse,
-  'Automobile Technician': Wrench,
-  'Fashion Designer': Palette,
-  'Photographer': Cpu,
+  'Chartered Accountant': Calculator,
+  'Growth Marketing Lead': Target,
+  'Industrial Electrician': Zap,
+  'Executive Culinary Chef': Palette,
+  'Fashion Technologist': PenTool,
 };
 
 /* ─── Gradient palette per stream ───────────────────────── */
-const STREAM_META: Record<string, { tab: string; cardGrads: string[]; pill: string }> = {
+const STREAM_META: Record<string, { tab: string; pill: string; bg: string }> = {
   Science: {
-    tab: 'linear-gradient(135deg,#667eea,#764ba2)',
-    pill: '#667eea',
-    cardGrads: [
-      'linear-gradient(135deg,#667eea 0%,#764ba2 100%)',
-      'linear-gradient(135deg,#4facfe 0%,#00f2fe 100%)',
-      'linear-gradient(135deg,#43e97b 0%,#38f9d7 100%)',
-      'linear-gradient(135deg,#fa709a 0%,#fee140 100%)',
-      'linear-gradient(135deg,#a18cd1 0%,#fbc2eb 100%)',
-      'linear-gradient(135deg,#f093fb 0%,#f5576c 100%)',
-    ],
+    tab: 'linear-gradient(135deg, #881337 0%, #be123c 50%, #f43f5e 100%)',
+    pill: '#e11d48',
+    bg: 'bg-gradient-to-br from-rose-50 via-[#fff1f2] to-[#ffe4e6] border-[#fecdd3]',
   },
   Arts: {
-    tab: 'linear-gradient(135deg,#f093fb,#f5576c)',
-    pill: '#f5576c',
-    cardGrads: [
-      'linear-gradient(135deg,#f093fb 0%,#f5576c 100%)',
-      'linear-gradient(135deg,#fccb90 0%,#d57eeb 100%)',
-      'linear-gradient(135deg,#fd7043 0%,#ff8a65 100%)',
-      'linear-gradient(135deg,#e96c8a 0%,#ee9ca7 100%)',
-      'linear-gradient(135deg,#c471ed 0%,#f64f59 100%)',
-      'linear-gradient(135deg,#f7971e 0%,#ffd200 100%)',
-    ],
+    tab: 'linear-gradient(135deg, #4A00E0 0%, #8E2DE2 100%)',
+    pill: '#d946ef',
+    bg: 'bg-gradient-to-br from-fuchsia-50 to-[#FAE8FF] border-[#F5D0FE]',
   },
   Commerce: {
-    tab: 'linear-gradient(135deg,#ff6b6b,#ffa726)',
-    pill: '#ff6b6b',
-    cardGrads: [
-      'linear-gradient(135deg,#ff6b6b 0%,#ffa726 100%)',
-      'linear-gradient(135deg,#f7971e 0%,#ffd200 100%)',
-      'linear-gradient(135deg,#11998e 0%,#38ef7d 100%)',
-      'linear-gradient(135deg,#fc4a1a 0%,#f7b733 100%)',
-      'linear-gradient(135deg,#16a085 0%,#f4d03f 100%)',
-      'linear-gradient(135deg,#e44d26 0%,#f16529 100%)',
-    ],
+    tab: 'linear-gradient(135deg, #1f4037 0%, #059669 100%)',
+    pill: '#10b981',
+    bg: 'bg-gradient-to-br from-emerald-50 to-[#D1FAE5] border-[#A7F3D0]',
   },
   Vocational: {
-    tab: 'linear-gradient(135deg,#11998e,#38ef7d)',
-    pill: '#11998e',
-    cardGrads: [
-      'linear-gradient(135deg,#11998e 0%,#38ef7d 100%)',
-      'linear-gradient(135deg,#005c97 0%,#363795 100%)',
-      'linear-gradient(135deg,#1d976c 0%,#93f9b9 100%)',
-      'linear-gradient(135deg,#56ab2f 0%,#a8e063 100%)',
-      'linear-gradient(135deg,#2196f3 0%,#21cbf3 100%)',
-      'linear-gradient(135deg,#134e5e 0%,#71b280 100%)',
-    ],
+    tab: 'linear-gradient(135deg, #083344 0%, #0284c7 100%)',
+    pill: '#0ea5e9',
+    bg: 'bg-gradient-to-br from-sky-50 to-[#E0F2FE] border-[#BAE6FD]',
   },
-};
-
-const DEGREES: Record<string, string[]> = {
-  Science: ['B.Sc. Computer Science', 'B.Sc. Physics', 'B.Sc. Chemistry', 'B.Pharma', 'BCA'],
-  Arts: ['B.A. English', 'B.A. Journalism', 'B.F.A.', 'B.Des', 'B.Music'],
-  Commerce: ['B.Com', 'BBA', 'B.Com (Hons)', 'BMS'],
-  Vocational: ['ITI', 'Hotel Management', 'GNM', 'NIFT', 'Mass Media'],
 };
 
 const STREAMS = ['Science', 'Arts', 'Commerce', 'Vocational'];
@@ -155,282 +106,154 @@ const STREAM_ICONS: Record<string, any> = {
   Vocational: Wrench,
 };
 
-/* ─── Illustrated SVG banner per career ─────────────────── */
-function CareerIllustration({ title, gradient }: { title: string; gradient: string }) {
-  const Icon = ICON_MAP[title] || Code;
-  return (
-    <div className="relative w-full h-28 rounded-2xl overflow-hidden flex items-center justify-center mb-4"
-      style={{ background: gradient }}>
-      {/* Decorative circles */}
-      <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full opacity-20" style={{ background: 'rgba(255,255,255,0.6)' }} />
-      <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full opacity-15" style={{ background: 'rgba(255,255,255,0.5)' }} />
-      {/* Icon */}
-      <div className="relative z-10 flex flex-col items-center gap-2">
-        <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.25)' }}>
-          <Icon className="w-8 h-8 text-white" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Career Card ────────────────────────────────────────── */
-function CareerCard({ career, gradient, index, selectedStream }: { career: CareerPath; gradient: string; index: number; selectedStream: string }) {
-  const [shortlisted, setShortlisted] = useState(false);
-  const router = useRouter();
-  const Icon = ICON_MAP[career.title] || Code;
-
-  return (
-    <div
-      className="rounded-3xl overflow-hidden flex flex-col hover:scale-[1.02] transition-all duration-300 group"
-      style={{
-        background: 'rgba(255,255,255,0.9)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255,255,255,0.7)',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
-        animationDelay: `${index * 60}ms`,
-      }}
-    >
-      {/* Gradient header */}
-      <div className="relative h-32 flex items-center justify-center overflow-hidden" style={{ background: gradient }}>
-        {/* Decorative blobs */}
-        <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full opacity-20" style={{ background: 'rgba(255,255,255,0.5)' }} />
-        <div className="absolute -bottom-6 -left-6 w-20 h-20 rounded-full opacity-15" style={{ background: 'rgba(255,255,255,0.4)' }} />
-        {/* Title strip */}
-        <div className="absolute inset-x-0 bottom-0 px-4 py-3 flex items-center gap-2"
-          style={{ background: 'rgba(0,0,0,0.18)', backdropFilter: 'blur(4px)' }}>
-          <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-            style={{ background: 'rgba(255,255,255,0.25)' }}>
-            <Icon className="w-4 h-4 text-white" />
-          </div>
-          <h3 className="text-white font-bold text-sm leading-tight">{career.title}</h3>
-          <button
-            onClick={() => setShortlisted(s => !s)}
-            className="ml-auto flex-shrink-0 transition-transform hover:scale-110 active:scale-95"
-          >
-            <Star
-              className="w-4 h-4 transition-colors"
-              fill={shortlisted ? '#fbbf24' : 'transparent'}
-              stroke={shortlisted ? '#fbbf24' : 'rgba(255,255,255,0.7)'}
-            />
-          </button>
-        </div>
-        {/* Big icon in center */}
-        <div className="w-16 h-16 rounded-2xl flex items-center justify-center relative z-10"
-          style={{ background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.35)' }}>
-          <Icon className="w-9 h-9 text-white" />
-        </div>
-      </div>
-
-      {/* Body */}
-      <div className="flex-1 p-4 flex flex-col">
-        <p className="text-xs text-slate-500 mb-3 leading-relaxed line-clamp-2">{career.description}</p>
-
-        {/* Prepares for */}
-        <div className="mb-3">
-          <p className="text-xs font-bold text-slate-700 mb-2 flex items-center gap-1">
-            <BookOpen className="w-3.5 h-3.5" style={{ color: '#667eea' }} />
-            Prepares for:
-          </p>
-          <ul className="space-y-1.5">
-            {career.preparation_for.slice(0, 3).map((item, i) => (
-              <li key={i} className="flex items-center gap-2 text-xs text-slate-600">
-                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: gradient.includes('667eea') ? '#667eea' : gradient.includes('f093fb') ? '#f5576c' : gradient.includes('ff6b6b') ? '#ff6b6b' : '#11998e' }} />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Job tags */}
-        {career.job_opportunities && career.job_opportunities.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {career.job_opportunities.slice(0, 3).map((job, i) => (
-              <span key={i} className="px-2 py-0.5 rounded-full text-xs font-medium text-slate-500"
-                style={{ background: 'rgba(103,126,234,0.08)', border: '1px solid rgba(103,126,234,0.15)' }}>
-                {job}
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* CTA */}
-        <button
-          onClick={() => router.push(`/career-paths/${selectedStream.toLowerCase()}/${career.id}`)}
-          className="mt-auto w-full py-2.5 rounded-2xl text-white text-xs font-bold flex items-center justify-center gap-2 transition-all hover:opacity-90 active:scale-95 cursor-pointer"
-          style={{ background: gradient, boxShadow: `0 4px 14px rgba(0,0,0,0.15)` }}
-        >
-          View Career Roadmap <ArrowRight className="w-3.5 h-3.5" />
-        </button>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Main Page ──────────────────────────────────────────── */
 export default function CareerPathsPage() {
-  const [careerPaths, setCareerPaths] = useState<CareerPath[]>([]);
   const [selectedStream, setSelectedStream] = useState('Science');
-  const [selectedDegree, setSelectedDegree] = useState('');
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    setSelectedDegree(DEGREES[selectedStream][0]);
-  }, [selectedStream]);
-
-  useEffect(() => {
-    loadCareerPaths();
-  }, [selectedStream]);
-
-  const loadCareerPaths = useCallback(async () => {
-    // setLoading(true);
-    // try {
-    //   const { data } = await supabase
-    //     .from('career_paths')
-    //     .select('*')
-    //     .eq('stream', selectedStream);
-    //   setCareerPaths(data && data.length > 0 ? data : FALLBACK[selectedStream]);
-    // } catch {
-    //   setCareerPaths(FALLBACK[selectedStream]);
-    // } finally {
-    //   setLoading(false);
-    // }
-  }, [selectedStream]);
 
   const meta = STREAM_META[selectedStream];
   const StreamIcon = STREAM_ICONS[selectedStream];
-  const displayed = selectedStream in FALLBACK
-    ? (careerPaths.length > 0 ? careerPaths : FALLBACK[selectedStream])
-    : careerPaths;
+  const displayed = FALLBACK[selectedStream];
 
   return (
-    <div className="space-y-5">
-
-      {/* ── Hero banner ── */}
-      <div
-        className="rounded-3xl p-7 relative overflow-hidden"
-        style={{ background: meta.tab, boxShadow: '0 20px 60px rgba(0,0,0,0.18)' }}
-      >
-        {/* Blobs */}
-        <div className="absolute -top-12 -right-12 w-52 h-52 rounded-full opacity-20" style={{ background: 'rgba(255,255,255,0.5)' }} />
-        <div className="absolute bottom-0 left-[35%] w-32 h-32 rounded-full opacity-10" style={{ background: 'rgba(255,255,255,0.6)' }} />
-        <div className="absolute top-6 right-[18%] w-10 h-10 rounded-full opacity-25" style={{ background: 'rgba(255,255,255,0.8)' }} />
-
-        <div className="relative z-10 flex items-start justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <StreamIcon className="w-4 h-4 text-white/80" />
-              <span className="text-white/80 text-xs font-bold uppercase tracking-widest">Career Guidance</span>
-            </div>
-            <h1 className="text-3xl font-black text-white leading-tight mb-2">Career Paths</h1>
-            <p className="text-white/80 text-sm leading-relaxed max-w-lg">
-              Explore various career options unlocked by the degree courses and streams you&apos;re interested in.
-            </p>
-          </div>
-          <div
-            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl flex-shrink-0"
-            style={{ background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)' }}
-          >
-            <Star className="w-4 h-4 text-yellow-300" fill="#fbbf24" />
-            <span className="text-white text-sm font-semibold">{displayed.length * 1240}+ students exploring</span>
-          </div>
+    <div className="space-y-6 pb-20 max-w-7xl mx-auto">
+      {/* ── MASSIVE HERO BANNER (Sharper, Colorful, Premium) ── */}
+      <div className="rounded-3xl p-10 md:p-14 relative overflow-hidden shadow-xl group border border-white/20"
+        style={{ background: meta.tab }}>
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle, white 2px, transparent 2px)', backgroundSize: '28px 28px' }} />
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full opacity-10 bg-white blur-3xl group-hover:scale-110 transition-transform duration-1000" />
+        
+        <div className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto gap-4">
+           <div className="w-20 h-20 bg-white/10 backdrop-blur-3xl rounded-2xl flex items-center justify-center border border-white/20 shadow-inner mb-2">
+             <StreamIcon className="w-10 h-10 text-white drop-shadow-md" />
+           </div>
+           <div className="bg-white/10 px-5 py-2 rounded-lg border border-white/20 backdrop-blur-md flex items-center gap-2">
+              <Star className="w-4 h-4 text-amber-300 fill-amber-300" />
+              <span className="text-white text-xs font-black uppercase tracking-widest leading-none drop-shadow-sm">Global Career Roadmap Atlas</span>
+           </div>
+           <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight tracking-tight drop-shadow-lg pb-2">
+             {selectedStream} Pathways
+           </h1>
+           <p className="text-white/90 text-lg font-medium leading-relaxed mt-1 max-w-2xl drop-shadow-md">
+             Highly detailed global analyses of the most lucrative and impactful career trajectories emerging from the {selectedStream} discipline.
+           </p>
         </div>
       </div>
 
-      {/* ── Controls row ── */}
-      <div className="flex flex-wrap items-center gap-3">
-        {/* Stream tabs */}
-        <div className="flex gap-1 p-1 rounded-2xl flex-wrap"
-          style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.6)', boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
+      {/* ── Sleek Controls Row ── */}
+      <div className="flex flex-wrap items-center justify-between gap-4 bg-white/40 backdrop-blur-md p-2 rounded-2xl border border-white/40 shadow-sm">
+        <div className="flex gap-2 flex-wrap w-full md:w-auto">
           {STREAMS.map(stream => {
             const SIcon = STREAM_ICONS[stream];
             return (
               <button
                 key={stream}
                 onClick={() => setSelectedStream(stream)}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-200"
-                style={selectedStream === stream
-                  ? { background: STREAM_META[stream].tab, color: 'white', boxShadow: `0 4px 14px rgba(0,0,0,0.2)` }
-                  : { color: '#94a3b8' }}
+                className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-black transition-all ${
+                  selectedStream === stream 
+                  ? 'text-white shadow-md' 
+                  : 'bg-transparent text-slate-700 hover:bg-white/50 border border-transparent hover:border-white/40'
+                }`}
+                style={selectedStream === stream ? { background: STREAM_META[stream].tab } : {}}
               >
-                <SIcon className="w-4 h-4" />
+                <SIcon className="w-[18px] h-[18px]" />
                 {stream}
               </button>
             );
           })}
         </div>
-
-        {/* Degree dropdown */}
-        <div className="relative">
-          <select
-            value={selectedDegree}
-            onChange={e => setSelectedDegree(e.target.value)}
-            className="appearance-none pl-4 pr-9 py-2.5 rounded-2xl text-sm font-semibold text-slate-700 outline-none cursor-pointer transition-all hover:shadow-md"
-            style={{ background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.6)', boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}
-          >
-            {(DEGREES[selectedStream] || []).map(d => (
-              <option key={d} value={d}>{d}</option>
-            ))}
-          </select>
-          <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+        
+        {/* Global Statistics Pill */}
+        <div className="px-5 py-3 bg-white/70 backdrop-blur-md rounded-xl border border-white/80 text-slate-800 flex items-center gap-4 w-full md:w-auto justify-between shadow-sm">
+           <div className="flex flex-col">
+             <span className="text-[9px] text-slate-500 font-bold uppercase tracking-wider leading-tight">Total Roles Tracked</span>
+             <span className="font-black text-sm leading-tight text-slate-800">{displayed.length * 940}+ Verified</span>
+           </div>
+           <Activity className="w-5 h-5" style={{ color: meta.pill }} />
         </div>
       </div>
 
-      {/* ── Stats strip ── */}
-      <div className="grid grid-cols-3 gap-3">
-        {[
-          { label: 'Career Paths', value: `${displayed.length}+` },
-          { label: 'Avg. Salary', value: '₹8–24 LPA' },
-          { label: 'Top Recruiters', value: '500+' },
-        ].map((s, i) => (
-          <div key={i} className="rounded-2xl px-5 py-4 text-center"
-            style={{ background: 'rgba(255,255,255,0.9)', border: '1px solid rgba(255,255,255,0.6)', boxShadow: '0 4px 16px rgba(0,0,0,0.05)' }}>
-            <p className="text-2xl font-black text-slate-800">{s.value}</p>
-            <p className="text-xs text-slate-400 font-medium mt-0.5">{s.label}</p>
-          </div>
-        ))}
+      {/* ── Advanced Detailed Premium Card Grid ── */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        {displayed.map((career, i) => {
+          const Icon = ICON_MAP[career.title] || Briefcase;
+          return (
+            <div key={career.id} className={`flex flex-col p-6 sm:p-8 rounded-[2.5rem] border transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 relative overflow-hidden group ${meta.bg}`}>
+               
+               {/* Decorative Gradient Flare */}
+               <div className="absolute -right-20 -top-20 w-64 h-64 bg-white/40 blur-3xl rounded-full pointer-events-none group-hover:bg-white/60 transition-colors duration-700" />
+
+               {/* Top Meta Area */}
+               <div className="flex sm:flex-row flex-col sm:items-start justify-between gap-4 mb-6 relative z-10">
+                  <div className="flex gap-5 items-start">
+                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:rotate-3 transition-transform duration-500 shrink-0"
+                         style={{ background: meta.tab }}>
+                       <Icon className="w-8 h-8 text-white drop-shadow-sm" />
+                    </div>
+                    <div className="flex flex-col mt-1">
+                      <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight tracking-tight">
+                        {career.title}
+                      </h3>
+                      <p className="text-slate-600 font-bold text-[13px] uppercase tracking-wider mt-1">
+                        {career.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white border border-slate-100 rounded-full text-[10px] font-black text-slate-700 uppercase tracking-widest shadow-sm shrink-0">
+                    <Clock className="w-3.5 h-3.5" style={{ color: meta.pill }} /> Highly Rated
+                  </div>
+               </div>
+
+               {/* Full Description */}
+               <p className="text-slate-600 font-medium text-sm leading-relaxed mb-6 relative z-10">
+                 {career.long_description}
+               </p>
+               
+               {/* Comprehensive Stats Row */}
+               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6 relative z-10">
+                 <div className="bg-white/60 p-4 rounded-xl border border-white/80 shadow-sm flex flex-col justify-center">
+                    <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest leading-none mb-2 flex items-center gap-1.5"><TrendingUp className="w-3.5 h-3.5" style={{color: meta.pill}}/> Salary</p>
+                    <p className="text-sm sm:text-base font-black text-slate-800 leading-none">{career.salary}</p>
+                 </div>
+                 <div className="bg-white/60 p-4 rounded-xl border border-white/80 shadow-sm flex flex-col justify-center">
+                    <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest leading-none mb-2 flex items-center gap-1.5"><Target className="w-3.5 h-3.5" style={{color: meta.pill}}/> Demand</p>
+                    <p className="text-sm sm:text-base font-black text-slate-800 leading-none">{career.demand}</p>
+                 </div>
+                 <div className="bg-white/60 p-4 rounded-xl border border-white/80 shadow-sm flex flex-col justify-center sm:col-span-1 col-span-2">
+                    <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest leading-none mb-2 flex items-center gap-1.5"><Users className="w-3.5 h-3.5" style={{color: meta.pill}}/> Recruiters</p>
+                    <p className="text-[13px] font-black text-slate-800 leading-tight">{career.job_opportunities.slice(0, 2).join(', ')}</p>
+                 </div>
+               </div>
+
+               {/* Preparation Tags */}
+               <div className="mb-8 relative z-10">
+                  <p className="text-[10px] text-slate-400 font-extrabold uppercase tracking-widest mb-3">Key Competencies & Prep</p>
+                  <div className="flex flex-wrap gap-2">
+                     {career.preparation_for.map((prep, idx) => (
+                       <span key={idx} className="px-3 py-1.5 rounded-lg bg-white/60 border border-white/80 text-[11px] font-bold text-slate-700 shadow-sm backdrop-blur-md">
+                         {prep}
+                       </span>
+                     ))}
+                  </div>
+               </div>
+
+               {/* Bottom CTA */}
+               <div className="mt-auto pt-6 border-t border-slate-200/50 relative z-10 flex flex-col sm:flex-row items-center gap-4 justify-between">
+                  <p className="text-[11px] text-slate-500 font-bold uppercase tracking-widest text-center sm:text-left">
+                    Requires <span style={{color: meta.pill}}>Advanced Toolkit</span>
+                  </p>
+                  <Link
+                    href={`/career/${career.slug}`}
+                    className="w-full sm:w-auto py-3.5 px-8 rounded-xl text-white font-black text-sm flex items-center justify-center gap-2 shadow-xl shadow-[color:var(--pill)]/20 transition-all hover:scale-105 active:scale-95 text-center group/btn"
+                    style={{ background: meta.tab, '--pill': meta.pill } as any}
+                  >
+                    View Interactive Roadmap <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+               </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* ── Career cards grid ── */}
-      {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-72 rounded-3xl animate-pulse"
-              style={{ background: 'rgba(255,255,255,0.6)' }} />
-          ))}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {displayed.map((career, i) => (
-            <CareerCard
-              key={career.id}
-              career={career}
-              gradient={meta.cardGrads[i % meta.cardGrads.length]}
-              index={i}
-              selectedStream={selectedStream}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* ── Bottom CTA ── */}
-      <div
-        className="rounded-3xl p-6 flex items-center justify-between gap-4"
-        style={{ background: meta.tab, boxShadow: '0 12px 40px rgba(0,0,0,0.15)' }}
-      >
-        <div>
-          <h3 className="text-white font-black text-lg leading-tight">Not sure which path to take?</h3>
-          <p className="text-white/75 text-sm mt-1">Take our aptitude quiz to get AI-powered career recommendations.</p>
-        </div>
-        <button
-          onClick={() => router.push('/career-quiz')}
-          className="flex-shrink-0 flex items-center gap-2 px-6 py-3 rounded-2xl font-bold text-sm transition-all hover:scale-105 active:scale-95"
-          style={{ background: 'rgba(255,255,255,0.95)', color: meta.pill, boxShadow: '0 4px 16px rgba(0,0,0,0.15)' }}
-        >
-          Take Quiz <ArrowRight className="w-4 h-4" />
-        </button>
-      </div>
     </div>
   );
 }

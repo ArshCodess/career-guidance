@@ -1,6 +1,6 @@
 'use client';
 
-import { GraduationCap, Briefcase, Building2, Gift, Search, Bell, ChevronRight, BookOpen, ClipboardList, LayoutDashboard, Sparkles, FileText, Headphones, User, TrendingUp, MapPin } from 'lucide-react';
+import { GraduationCap, Briefcase, Building2, Gift, Search, Bell, ChevronRight, BookOpen, ClipboardList, LayoutDashboard, Sparkles, FileText, Headphones, User, TrendingUp, MapPin, Star, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -49,7 +49,7 @@ export default function DashboardLayout({
   }, []);
 
   return (
-    <div className="min-h-screen flex bg-[#E8ECF5]">
+    <div className="min-h-screen flex bg-transparent">
 
       {/* LEFT SIDEBAR - fixed */}
       <aside className="hidden lg:flex w-64 bg-white/60 backdrop-blur-sm p-6 flex-col gap-6 fixed top-0 left-0 h-screen overflow-y-auto z-20">
@@ -107,17 +107,8 @@ export default function DashboardLayout({
       {/* MAIN CONTENT */}
       <main className="flex-1 flex flex-col lg:ml-64 min-h-screen pb-20 lg:pb-0 w-full lg:w-auto">
 
-        {/* TOP HEADER — single search bar, no duplicate */}
-        <header className="bg-white/50 backdrop-blur-md px-8 py-3.5 flex items-center justify-between sticky top-0 z-10 border-b border-white/60">
-          {/* Search */}
-          <div className="relative w-72">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search courses, colleges..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-full bg-white/80 border border-slate-200/80 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40 placeholder:text-slate-400 text-slate-700"
-            />
-          </div>
+        {/* TOP HEADER */}
+        <header className="bg-white/50 backdrop-blur-md px-8 py-3.5 flex items-center justify-end sticky top-0 z-10 border-b border-white/60">
 
           {/* Right side flex */}
           <div className="flex items-center gap-3">
@@ -139,54 +130,43 @@ export default function DashboardLayout({
         <div className="flex-1 flex flex-col lg:flex-row gap-5 p-4 lg:p-6 w-full max-w-[100vw] overflow-x-hidden">
           <div className="flex-1 min-w-0">{children}</div>
 
-          {/* RIGHT SIDEBAR - hidden on mobile, shown on lg screens */}
-          <aside className="hidden lg:block w-72 flex-shrink-0 space-y-4">
+          {/* RIGHT SIDEBAR - hidden on mobile, shown on lg screens, hidden on college directory, career quiz, career paths, & course suggestions */}
+          {!pathname?.startsWith('/college-directory') && !pathname?.startsWith('/career-quiz') && !pathname?.startsWith('/career-paths') && !pathname?.startsWith('/course-suggestions') && (
+            <aside className="hidden lg:block w-72 flex-shrink-0 space-y-4">
 
-            {/* ── Profile Card ── */}
-            <div className="relative rounded-3xl overflow-hidden group border border-white/60 bg-white/40 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-500">
-              {/* Gradient top band */}
-              <div className="h-24 w-full relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #4F46E5 0%, #3B82F6 50%, #8B5CF6 100%)' }}>
-                <div className="absolute top-2 right-2 w-24 h-24 bg-white/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-                <div className="absolute top-0 left-4 w-12 h-12 bg-white/20 rounded-full blur-xl group-hover:translate-x-4 transition-transform duration-700" />
-              </div>
-              <div className="bg-white/70 backdrop-blur-md px-5 pb-6 pt-0 relative z-10">
-                {/* Avatar — overlapping the band */}
-                <div className="flex justify-center -mt-12 mb-4 relative z-20">
-                  <div className="relative">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur opacity-40 group-hover:opacity-70 transition duration-500"></div>
-                    <div className="w-24 h-24 bg-slate-100 flex items-center justify-center relative rounded-full overflow-hidden ring-4 ring-white shadow-xl transform group-hover:scale-105 transition-transform duration-500">
-                      <User className="w-10 h-10 text-slate-400" />
-                    </div>
+            {/* ── Cold Cyan Profile Card ── */}
+            <div className="relative rounded-[2rem] bg-gradient-to-br from-white via-[#f0f6ff] to-[#e0e7ff] border border-white shadow-xl shadow-blue-900/5 transition-all duration-300 p-6 flex flex-col items-center text-center overflow-hidden">
+               
+               {/* Cold background blur element */}
+               <div className="absolute top-[-20%] left-[-20%] w-48 h-48 bg-cyan-400/10 rounded-full blur-[40px] pointer-events-none" />
+               <div className="absolute bottom-[-20%] right-[-20%] w-48 h-48 bg-blue-500/10 rounded-full blur-[40px] pointer-events-none" />
+
+               {/* Elegant Avatar */}
+               <div className="w-20 h-20 bg-white flex items-center justify-center rounded-[1.25rem] border border-blue-100 shadow-sm mb-4 mt-2 group relative z-10 transition-transform hover:-translate-y-1 hover:shadow-md">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-cyan-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-[1.25rem]" />
+                  <User className="w-8 h-8 text-blue-400 relative z-10 group-hover:text-cyan-500 transition-colors" />
+               </div>
+
+               <h3 className="font-extrabold text-slate-800 text-lg mb-1 tracking-tight relative z-10">Stella Walton</h3>
+               <p className="text-[10px] text-blue-500 font-black uppercase tracking-widest mb-6 relative z-10">Class 12 Student</p>
+
+               {/* Custom Info Block (Cold Theme) */}
+               <div className="w-full bg-white/60 backdrop-blur-md rounded-2xl p-4 mb-6 border border-white flex flex-col gap-3 relative z-10 shadow-sm shadow-blue-900/5">
+                  <div className="flex items-center justify-between">
+                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest flex items-center gap-1.5"><Briefcase className="w-3.5 h-3.5 text-cyan-500"/> Top Match</span>
+                     <span className="text-[11px] font-black text-slate-800">Software Eng.</span>
                   </div>
-                </div>
-
-                <h3 className="text-center font-bold text-slate-800 text-lg group-hover:text-indigo-700 transition-colors">Stella Walton</h3>
-                <p className="text-center text-xs text-slate-500 mb-4 font-medium uppercase tracking-wider">Class 12 Student</p>
-
-                {/* Progress */}
-                <div className="bg-slate-50/80 rounded-2xl p-3 mb-5 border border-slate-100">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-1.5">
-                      <span className="relative flex h-2.5 w-2.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                      </span>
-                      <span className="text-[11px] text-slate-600 font-semibold">Profile Strength</span>
-                    </div>
-                    <span className="text-[11px] text-indigo-600 font-bold">70%</span>
+                  <div className="w-full h-px bg-blue-100/50" />
+                  <div className="flex items-center justify-between">
+                     <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest flex items-center gap-1.5"><TrendingUp className="w-3.5 h-3.5 text-blue-500"/> Trajectory</span>
+                     <span className="text-[10px] font-black text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-100 uppercase tracking-wider">Locked In</span>
                   </div>
-                  <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                    <div className="h-full w-[70%] bg-gradient-to-r from-indigo-500 via-blue-500 to-purple-500 rounded-full relative overflow-hidden">
-                      <div className="absolute top-0 right-0 bottom-0 left-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.3)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px] animate-[shimmer_2s_linear_infinite]"></div>
-                    </div>
-                  </div>
-                </div>
+               </div>
 
-                <Link href="/edit-profile" className="block w-full text-center bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white rounded-xl py-3 text-sm font-bold transition-all duration-300 shadow-md shadow-indigo-200 hover:shadow-lg hover:shadow-indigo-300 transform hover:-translate-y-0.5 relative overflow-hidden group/btn">
-                  <span className="relative z-10">Edit Profile</span>
-                  <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite]"></div>
-                </Link>
-              </div>
+               {/* Elegant Cold Button */}
+               <Link href="/edit-profile" className="relative z-10 w-full text-center bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white rounded-xl py-3.5 text-[11px] font-black tracking-widest uppercase transition-all shadow-lg shadow-blue-500/20 hover:shadow-cyan-500/30 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+                 View Portfolio <ChevronRight className="w-3.5 h-3.5 text-white/70" />
+               </Link>
             </div>
 
             {/* ── Important Dates ── */}
@@ -256,6 +236,7 @@ export default function DashboardLayout({
             </div>
 
           </aside>
+          )}
         </div>
       </main>
 

@@ -32,16 +32,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header className="absolute top-0 right-0 w-full flex justify-end items-center p-4 gap-4 h-16 z-[100] pointer-events-none">
-          <div className="pointer-events-auto flex gap-4 items-center">
-            <button className="text-sm font-semibold text-slate-800 hover:text-indigo-600 transition-colors">
-              Sign In
-            </button>
-            <button className="bg-purple-600 hover:bg-purple-700 text-white rounded-full font-medium text-sm sm:text-base h-10 px-5 cursor-pointer shadow-lg transition-all">
-              Sign Up
-            </button>
-          </div>
-        </header>
         {children}
       </body>
     </html>
