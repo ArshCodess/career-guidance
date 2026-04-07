@@ -4,6 +4,13 @@ import { GraduationCap, Briefcase, Building2, Gift, Search, Bell, ChevronRight, 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { useState, useEffect } from 'react';
+
+const formatCurrentDate = () => {
+  const date = new Date();
+  const options: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
+};
   
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -35,6 +42,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    setCurrentDate(formatCurrentDate());
+  }, []);
 
   return (
     <div className="min-h-screen flex bg-[#E8ECF5]">
@@ -109,7 +121,7 @@ export default function DashboardLayout({
 
           {/* Right side flex */}
           <div className="flex items-center gap-3">
-            <span className="hidden sm:inline-block text-sm text-slate-500 font-medium mr-1">12 May 2022, Friday</span>
+            <span className="hidden sm:inline-block text-sm text-slate-500 font-medium mr-1">{currentDate || 'Loading...'}</span>
 
             <button className="relative w-9 h-9 rounded-full bg-white/70 border border-slate-200/60 flex items-center justify-center hover:bg-white transition-colors shadow-sm">
               <Bell className="w-4 h-4 text-slate-500" />

@@ -358,8 +358,8 @@ export default function CourseSuggestionsPage() {
       </div>
 
       {/* Tabs + filter */}
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex gap-1 p-1 rounded-2xl" style={glassWhite}>
+      <div className="flex flex-wrap items-center justify-center">
+        <div className="flex gap-1 p-1 rounded-2xl justify-between" style={glassWhite}>
           {TABS.map((tab, i) => (
             <button
               key={i}
@@ -373,12 +373,6 @@ export default function CourseSuggestionsPage() {
             </button>
           ))}
         </div>
-        <button
-          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl text-sm font-semibold text-slate-600 transition-all hover:shadow-md"
-          style={glassWhite}
-        >
-          Interests: Science, Technology <ChevronDown className="w-4 h-4 text-slate-400" />
-        </button>
       </div>
 
       {/* Stream cards */}
