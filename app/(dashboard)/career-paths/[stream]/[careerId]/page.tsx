@@ -715,37 +715,6 @@ export default function CareerRoadmapPage() {
 
     useEffect(() => {
         const loadCareerData = async () => {
-            try {
-                // Try to load from Supabase first
-                const { data } = await supabase
-                    .from('career_paths')
-                    .select('*')
-                    .eq('id', careerId)
-                    .single();
-
-                if (data) {
-                    setCareer(data);
-                } else {
-                    // Fallback to static data
-                    const allCareers = Object.values(FALLBACK).flat();
-                    const foundCareer = allCareers.find(c => c.id === careerId);
-                    setCareer(foundCareer || null);
-                }
-
-                // Load roadmap data
-                const roadmapData = CAREER_ROADMAPS[careerId];
-                setRoadmap(roadmapData || null);
-            } catch (error) {
-                // Fallback to static data
-                const allCareers = Object.values(FALLBACK).flat();
-                const foundCareer = allCareers.find(c => c.id === careerId);
-                setCareer(foundCareer || null);
-
-                const roadmapData = CAREER_ROADMAPS[careerId];
-                setRoadmap(roadmapData || null);
-            } finally {
-                setLoading(false);
-            }
         };
 
         loadCareerData();

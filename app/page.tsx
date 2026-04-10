@@ -1,7 +1,10 @@
+"use client";
 import { Sparkles, GraduationCap, Building2, MapPin, TrendingUp, ArrowRight } from "lucide-react";
 import Link from 'next/link';
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <div className="min-h-screen border-none overflow-hidden flex flex-col relative w-full">
       {/* Background Decor */}
@@ -48,7 +51,11 @@ export default function Home() {
           </p>
           
           {/* THE BIG "GET STARTED" BUTTON OPENING CLERK */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-2"
+            onClick={()=>{
+              router.push('/dashboard')
+            }}
+          >
               <button className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg px-10 py-5 rounded-full overflow-hidden shadow-xl hover:shadow-indigo-500/30 hover:scale-105 transition-all duration-300">
                 <span className="relative z-10">GET STARTED</span>
                 <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform" />

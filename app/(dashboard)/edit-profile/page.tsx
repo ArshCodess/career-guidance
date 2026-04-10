@@ -26,13 +26,13 @@ interface UserProfile {
 
 export default function EditProfile() {
   const [isHoveringAvatar, setIsHoveringAvatar] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [profile, setProfile] = useState<UserProfile>({
-    first_name: 'Stella',
-    last_name: 'Walton',
-    email: 'stella.walton@example.com',
+    first_name: 'Arman',
+    last_name: '',
+    email: 'arman.ahmed@example.com',
     class_level: '12',
     target_degree: 'btech',
     interests: ['Computer Science', 'Artificial Intelligence', 'Data Science'],
@@ -107,30 +107,6 @@ export default function EditProfile() {
   }, []);
 
   const loadUserProfile = async () => {
-    try {
-      setLoading(true);
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (user) {
-        const { data, error } = await supabase
-          .from('user_profiles')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-
-        if (data && !error) {
-          setProfile({
-            ...profile,
-            ...data,
-            email: user.email || data.email || profile.email
-          });
-        }
-      }
-    } catch (error) {
-      console.error('Error loading profile:', error);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleInputChange = (field: keyof UserProfile, value: string) => {
@@ -154,53 +130,6 @@ export default function EditProfile() {
   };
 
   const handleSave = async () => {
-    try {
-      setSaving(true);
-      setMessage(null);
-
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (!user) {
-        setMessage({ type: 'error', text: 'User not authenticated' });
-        return;
-      }
-
-      const profileData = {
-        user_id: user.id,
-        first_name: profile.first_name,
-        last_name: profile.last_name,
-        email: profile.email,
-        class_level: profile.class_level,
-        target_degree: profile.target_degree,
-        interests: profile.interests,
-        phone: profile.phone,
-        date_of_birth: profile.date_of_birth,
-        gender: profile.gender,
-        address: profile.address,
-        bio: profile.bio,
-        avatar_url: profile.avatar_url,
-        updated_at: new Date().toISOString()
-      };
-
-      const { error } = await supabase
-        .from('user_profiles')
-        .upsert(profileData, { onConflict: 'user_id' });
-
-      if (error) {
-        throw error;
-      }
-
-      setMessage({ type: 'success', text: 'Profile updated successfully!' });
-
-      // Clear success message after 3 seconds
-      setTimeout(() => setMessage(null), 3000);
-
-    } catch (error: any) {
-      console.error('Error saving profile:', error);
-      setMessage({ type: 'error', text: error.message || 'Failed to save profile' });
-    } finally {
-      setSaving(false);
-    }
   };
 
   if (loading) {
@@ -261,13 +190,13 @@ export default function EditProfile() {
                 </div>
               </div>
 
-              <h2 className="text-lg font-bold text-slate-800">Stella Walton</h2>
+              <h2 className="text-lg font-bold text-slate-800">Arman</h2>
               <p className="text-sm text-indigo-600 font-semibold mb-4 bg-indigo-50 px-3 py-1 rounded-full mt-2">Class 12 Student</p>
 
               <div className="w-full bg-slate-50 rounded-2xl p-4 border border-slate-100 flex flex-col gap-3">
                 <div className="flex items-center gap-3 text-sm text-slate-600">
                   <Mail className="w-4 h-4 text-slate-400" />
-                  <span className="truncate">stella.walton@example.com</span>
+                  <span className="truncate">arman.ahmed@example.com</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-slate-600">
                   <Calendar className="w-4 h-4 text-slate-400" />

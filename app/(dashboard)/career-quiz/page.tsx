@@ -239,97 +239,104 @@ export default function CareerQuiz() {
     );
   }
 
-  if (screen === 'quiz' && currentQuestion) {
+if (screen === 'quiz' && currentQuestion) {
     const isLast = currentIndex === TOTAL_QUESTIONS - 1;
     const SectionIcon = currentQuestion.section_id === 'interest' ? Compass :
                         currentQuestion.section_id === 'aptitude' ? Activity :
-                        currentQuestion.section_id === 'personality' ? BookHeart : Lightbulb;                        
+                        currentQuestion.section_id === 'personality' ? BookHeart : Lightbulb;
 
     return (
-      <div className="w-full max-w-3xl mx-auto py-8 px-4 animate-in slide-in-from-right-8 duration-500" ref={topRef}>
-        
+      <div className="min-h-screen flex flex-col justify-center w-full max-w-2xl mx-auto px-4 py-4" ref={topRef}>
+
         {/* Progress Header */}
-        <div className="mb-8 px-4">
-           <div className="flex items-center justify-between mb-3">
-             <div className="flex items-center gap-3">
-                <div className={`p-2.5 rounded-2xl bg-white shadow-md border border-slate-100 text-[#3B5FCC]`}>
-                   <SectionIcon className="w-6 h-6" />
-                </div>
-                <div>
-                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Section {Math.floor(currentIndex / 5) + 1} of 4</p>
-                   <p className="text-sm font-extrabold text-slate-800">{currentQuestion.section_name}</p>
-                </div>
-             </div>
-             <div className="text-right flex items-end gap-1">
-                <p className="text-3xl font-black text-slate-800 tracking-tighter leading-none">{currentIndex + 1}</p>
-                <p className="text-slate-400 font-bold mb-0.5">/ {TOTAL_QUESTIONS}</p>
-             </div>
-           </div>
-           
-           <div className="h-4 w-full bg-slate-100 rounded-full overflow-hidden shadow-inner p-1">
-             <div className={`h-full rounded-full bg-gradient-to-r ${SECTION_COLORS[currentQuestion.section_id ?? 'interest']} transition-all duration-700 ease-out`} style={{ width: `${progress}%` }} />
-           </div>
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-white shadow-sm border border-slate-100 text-[#3B5FCC]">
+                <SectionIcon className="w-4 h-4" />
+              </div>
+              <div>
+                <p className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 leading-none mb-0.5">
+                  Section {Math.floor(currentIndex / 5) + 1} of 4
+                </p>
+                <p className="text-xs font-extrabold text-slate-700 leading-none">{currentQuestion.section_name}</p>
+              </div>
+            </div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl font-black text-slate-800 tracking-tighter leading-none">{currentIndex + 1}</span>
+              <span className="text-slate-400 font-bold text-sm">/ {TOTAL_QUESTIONS}</span>
+            </div>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+            <div
+              className={`h-full rounded-full bg-gradient-to-r ${SECTION_COLORS[currentQuestion.section_id ?? 'interest']} transition-all duration-700 ease-out`}
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
 
         {/* Question Card */}
-        <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] shadow-2xl shadow-slate-200 p-8 md:p-12 border border-slate-100">
-           
-           <div className="mb-10 text-center">
-             <h1 className="text-2xl md:text-3xl font-extrabold leading-tight text-slate-900 tracking-tight">
-               {currentQuestion.question}
-             </h1>
-           </div>
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm px-5 py-5">
 
-           <div className="space-y-4">
-             {currentQuestion.options.map((option, idx) => {
-               const selected = selectedAnswer === option.option_id;
-               const prefixLabel = ['A', 'B', 'C', 'D', 'E', 'F'][idx];
-               
-               return (
-                 <button
-                   key={option.option_id}
-                   onClick={() => handleOptionSelect(option.option_id)}
-                   className={`w-full group text-left transition-all duration-300 outline-none ${selected ? 'scale-[1.02]' : 'hover:scale-[1.01]'}`}
-                 >
-                   <div className={`p-5 rounded-2xl flex items-center gap-5 transition-all ${
-                     selected 
-                     ? 'bg-gradient-to-r from-[#3B5FCC] to-[#5B7FDB] shadow-xl shadow-indigo-200 text-white border-transparent' 
-                     : 'bg-white border-2 border-slate-100 hover:border-[#5B7FDB] hover:bg-slate-50 hover:shadow-md'
-                   }`}>
-                     <div className={`flex shrink-0 h-10 w-10 items-center justify-center rounded-xl font-black text-sm transition-all shadow-sm ${
-                       selected ? 'bg-white text-[#3B5FCC]' : 'bg-slate-100 text-slate-500 group-hover:bg-[#ebf0ff] group-hover:text-[#3B5FCC]'
-                     }`}>
-                       {selected ? <CheckCircle2 className="h-6 w-6" /> : prefixLabel}
-                     </div>
-                     <div className="flex-1">
-                       <p className={`text-base md:text-lg font-bold leading-snug ${selected ? 'text-white' : 'text-slate-700 group-hover:text-slate-900'}`}>{option.text}</p>
-                     </div>
-                   </div>
-                 </button>
-               );
-             })}
-           </div>
+          {/* Question Text */}
+          <p className="text-sm md:text-base font-bold text-slate-800 leading-snug text-center mb-4 px-1">
+            {currentQuestion.question}
+          </p>
 
-           <div className="flex items-center justify-between mt-12 pt-6 border-t border-slate-100">
-             <button
-               onClick={handleBack}
-               disabled={currentIndex === 0}
-               className="inline-flex items-center justify-center px-6 py-3 rounded-2xl text-sm font-bold text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-slate-500"
-             >
-               <ChevronRight className="h-4 w-4 rotate-180 mr-2" /> Previous
-             </button>
-             <button
-               onClick={handleNext}
-               disabled={!selectedAnswer}
-               className={`inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3.5 text-sm font-black transition-all shadow-sm ${
-                 !selectedAnswer ? 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none' : 'bg-gradient-to-r from-[#5B7FDB] to-[#3B5FCC] text-white hover:shadow-xl hover:shadow-indigo-300 hover:-translate-y-0.5'
-               }`}
-             >
-               {isLast ? 'Discover Your Future' : 'Next Question'}
-               {!isLast && <ChevronRight className="h-5 w-5" />}
-             </button>
-           </div>
-           
+          {/* Options */}
+          <div className="flex flex-col gap-2">
+            {currentQuestion.options.map((option, idx) => {
+              const selected = selectedAnswer === option.option_id;
+              const prefixLabel = ['A', 'B', 'C', 'D', 'E', 'F'][idx];
+
+              return (
+                <button
+                  key={option.option_id}
+                  onClick={() => handleOptionSelect(option.option_id)}
+                  className={`w-full group text-left outline-none transition-all duration-200 ${selected ? 'scale-[1.01]' : 'hover:scale-[1.005]'}`}
+                >
+                  <div className={`flex items-center gap-3 px-4 py-3 rounded-xl border transition-all duration-200 ${
+                    selected
+                      ? 'bg-gradient-to-r from-[#3B5FCC] to-[#5B7FDB] border-transparent shadow-md shadow-indigo-200'
+                      : 'bg-white border-slate-100 hover:border-[#5B7FDB] hover:bg-slate-50 hover:shadow-sm'
+                  }`}>
+                    <div className={`flex shrink-0 w-8 h-8 items-center justify-center rounded-lg font-black text-xs transition-all ${
+                      selected
+                        ? 'bg-white/20 text-white'
+                        : 'bg-slate-100 text-slate-500 group-hover:bg-indigo-50 group-hover:text-[#3B5FCC]'
+                    }`}>
+                      {selected
+                        ? <CheckCircle2 className="w-4 h-4 text-white" />
+                        : prefixLabel}
+                    </div>
+                    <p className={`text-sm font-semibold leading-snug flex-1 ${
+                      selected ? 'text-white' : 'text-slate-700 group-hover:text-slate-900'
+                    }`}>
+                      {option.text}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Footer */}
+          <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-100">
+            <button
+              onClick={handleBack}
+              disabled={currentIndex === 0}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-400 hover:bg-slate-100 hover:text-slate-700 disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed transition-all"
+            >
+              <ChevronRight className="w-3.5 h-3.5 rotate-180" /> Previous
+            </button>
+
+            <p className="text-[11px] text-slate-400 italic">
+              {selectedAnswer ? 'Moving to next…' : 'Select an option to continue'}
+            </p>
+          </div>
+
         </div>
       </div>
     );

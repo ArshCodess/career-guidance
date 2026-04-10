@@ -103,7 +103,7 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-extrabold text-white leading-tight tracking-tight">
               Welcome back,{' '}
               <span className="relative inline-block">
-                <span className="relative z-10">Stella Walton!</span>
+                <span className="relative z-10">Arman!</span>
               </span>
             </h1>
           </div>

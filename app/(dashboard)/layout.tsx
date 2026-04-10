@@ -147,7 +147,7 @@ export default function DashboardLayout({
                   <User className="w-8 h-8 text-blue-400 relative z-10 group-hover:text-cyan-500 transition-colors" />
                </div>
 
-               <h3 className="font-extrabold text-slate-800 text-lg mb-1 tracking-tight relative z-10">Stella Walton</h3>
+               <h3 className="font-extrabold text-slate-800 text-lg mb-1 tracking-tight relative z-10">Arman</h3>
                <p className="text-[10px] text-blue-500 font-black uppercase tracking-widest mb-6 relative z-10">Class 12 Student</p>
 
                {/* Custom Info Block (Cold Theme) */}
