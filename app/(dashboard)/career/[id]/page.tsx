@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { 
+import {
   ChevronLeft, Briefcase, TrendingUp, Award, Clock,
   TerminalSquare, Laptop, Lightbulb, MapPin, ExternalLink, PlayCircle, Network,
   Zap, FlaskConical, Activity, Target, Compass, Database, Globe, Calculator
@@ -356,137 +356,137 @@ export default function CareerDetailPage() {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const safeId = typeof id === 'string' ? id.toLowerCase() : 'software-developer';
-  
+
   const career = CAREER_DATA[safeId as keyof typeof CAREER_DATA] || CAREER_DATA['software-developer'];
   const Icon = career.icon;
 
   return (
     <div className="max-w-[1200px] mx-auto pb-4 space-y-2 animate-in fade-in duration-500">
-       <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-         <Link href="/career-paths" className="inline-flex items-center justify-center gap-2 text-slate-500 hover:text-blue-600 font-bold text-[11px] uppercase tracking-widest bg-white/50 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-sm transition-all hover:bg-white/80 hover:-translate-x-1 border border-white w-full sm:w-auto">
-           <ChevronLeft className="w-4 h-4" /> Back to Paths
-         </Link>
-         <div className="bg-sky-50/70 backdrop-blur-md text-cyan-600 px-3 py-1.5 rounded-lg border border-sky-200/50 font-bold text-[11px] uppercase tracking-widest w-full sm:w-auto text-center flex justify-center items-center gap-2 shadow-sm">
-           <Activity className="w-3.5 h-3.5" /> Actively Hiring Role
-         </div>
-       </div>
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <Link href="/career-paths" className="inline-flex items-center justify-center gap-2 text-slate-500 hover:text-blue-600 font-bold text-[11px] uppercase tracking-widest bg-white/50 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-sm transition-all hover:bg-white/80 hover:-translate-x-1 border border-white w-full sm:w-auto">
+          <ChevronLeft className="w-4 h-4" /> Back to Paths
+        </Link>
+        <div className="bg-sky-50/70 backdrop-blur-md text-cyan-600 px-3 py-1.5 rounded-lg border border-sky-200/50 font-bold text-[11px] uppercase tracking-widest w-full sm:w-auto text-center flex justify-center items-center gap-2 shadow-sm">
+          <Activity className="w-3.5 h-3.5" /> Actively Hiring Role
+        </div>
+      </div>
 
-       {/* HERO BANNER - Leaner Size & Good Colors */}
-       <div className="relative rounded-[2rem] overflow-hidden min-h-[220px] flex items-center justify-center p-6 sm:p-8 shadow-xl group border border-white/10"
-         style={{ background: career.grad }}>
-          
-          <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, white 2px, transparent 2px)', backgroundSize: '24px 24px' }} />
-          <div className="absolute -top-10 -left-10 w-[400px] h-[400px] bg-white/5 rounded-full blur-3xl pointer-events-none group-hover:bg-white/10 transition-colors duration-1000" />
-          
-          {/* Floating UI Elements matching dashboard */}
-          <div className="absolute top-1/2 right-4 -translate-y-1/2 w-64 h-64 opacity-20 pointer-events-none select-none hidden lg:block">
-            <svg viewBox="0 0 300 300" className="w-full h-full animate-[bounce_6s_ease-in-out_infinite] drop-shadow-lg">
-              <rect x="50" y="50" width="200" height="150" rx="16" fill="white" opacity="0.1" />
-              <rect x="50" y="50" width="200" height="40" rx="16" fill="white" opacity="0.15" />
-              <circle cx="70" cy="70" r="5" fill="#fca5a5" />
-              <circle cx="90" cy="70" r="5" fill="#fcd34d" />
-              <circle cx="110" cy="70" r="5" fill="#34d399" />
-              <rect x="70" y="110" width="100" height="8" rx="4" fill="white" opacity="0.3" />
-              <rect x="70" y="130" width="140" height="8" rx="4" fill="white" opacity="0.2" />
-              <rect x="70" y="150" width="80" height="8" rx="4" fill="white" opacity="0.25" />
-              <polygon points="220,110 240,130 220,150" fill="#93c5fd" opacity="0.6" className="animate-pulse" />
-              <circle cx="280" cy="200" r="8" fill="white" opacity="0.7" />
-              <circle cx="20" cy="180" r="5" fill="#fbcfe8" opacity="0.9" />
-            </svg>
+      {/* HERO BANNER - Leaner Size & Good Colors */}
+      <div className="relative rounded-[2rem] overflow-hidden min-h-[220px] flex items-center justify-center p-6 sm:p-8 shadow-xl group border border-white/10"
+        style={{ background: career.grad }}>
+
+        <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, white 2px, transparent 2px)', backgroundSize: '24px 24px' }} />
+        <div className="absolute -top-10 -left-10 w-[400px] h-[400px] bg-white/5 rounded-full blur-3xl pointer-events-none group-hover:bg-white/10 transition-colors duration-1000" />
+
+        {/* Floating UI Elements matching dashboard */}
+        <div className="absolute top-1/2 right-4 -translate-y-1/2 w-64 h-64 opacity-20 pointer-events-none select-none hidden lg:block">
+          <svg viewBox="0 0 300 300" className="w-full h-full animate-[bounce_6s_ease-in-out_infinite] drop-shadow-lg">
+            <rect x="50" y="50" width="200" height="150" rx="16" fill="white" opacity="0.1" />
+            <rect x="50" y="50" width="200" height="40" rx="16" fill="white" opacity="0.15" />
+            <circle cx="70" cy="70" r="5" fill="#fca5a5" />
+            <circle cx="90" cy="70" r="5" fill="#fcd34d" />
+            <circle cx="110" cy="70" r="5" fill="#34d399" />
+            <rect x="70" y="110" width="100" height="8" rx="4" fill="white" opacity="0.3" />
+            <rect x="70" y="130" width="140" height="8" rx="4" fill="white" opacity="0.2" />
+            <rect x="70" y="150" width="80" height="8" rx="4" fill="white" opacity="0.25" />
+            <polygon points="220,110 240,130 220,150" fill="#93c5fd" opacity="0.6" className="animate-pulse" />
+            <circle cx="280" cy="200" r="8" fill="white" opacity="0.7" />
+            <circle cx="20" cy="180" r="5" fill="#fbcfe8" opacity="0.9" />
+          </svg>
+        </div>
+
+        <div className="relative z-10 flex flex-col items-center text-center w-full max-w-2xl mx-auto gap-3">
+          <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/10 backdrop-blur-2xl flex items-center justify-center shrink-0 border border-white/20 shadow-inner hover:scale-105 transition-transform duration-500">
+            <Icon className="w-7 h-7 md:w-8 md:h-8 text-white drop-shadow-md" />
           </div>
-          
-          <div className="relative z-10 flex flex-col items-center text-center w-full max-w-2xl mx-auto gap-3">
-            <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/10 backdrop-blur-2xl flex items-center justify-center shrink-0 border border-white/20 shadow-inner hover:scale-105 transition-transform duration-500">
-               <Icon className="w-7 h-7 md:w-8 md:h-8 text-white drop-shadow-md" />
+          <div>
+            <div className="bg-white/10 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-md flex items-center gap-2 mx-auto mb-2 w-max">
+              <Briefcase className="w-3 h-3 text-cyan-300" />
+              <span className="text-white text-[9px] font-black uppercase tracking-widest drop-shadow-sm">Specific Career Profile</span>
             </div>
-            <div>
-               <div className="bg-white/10 px-3 py-1.5 rounded-full border border-white/20 backdrop-blur-md flex items-center gap-2 mx-auto mb-2 w-max">
-                 <Briefcase className="w-3 h-3 text-cyan-300" />
-                 <span className="text-white text-[9px] font-black uppercase tracking-widest drop-shadow-sm">Specific Career Profile</span>
-               </div>
-               <h1 className="text-2xl md:text-4xl font-black text-white leading-tight mb-2 tracking-tight drop-shadow-md">{career.title}</h1>
-               <p className="text-white text-sm md:text-base font-medium max-w-xl mx-auto leading-relaxed drop-shadow-sm">
-                 {career.description}
-               </p>
-            </div>
+            <h1 className="text-2xl md:text-4xl font-black text-white leading-tight mb-2 tracking-tight drop-shadow-md">{career.title}</h1>
+            <p className="text-white text-sm md:text-base font-medium max-w-xl mx-auto leading-relaxed drop-shadow-sm">
+              {career.description}
+            </p>
           </div>
-       </div>
+        </div>
+      </div>
 
-       {/* CONTENT BLOCKS GRID */}
-       <div className="w-full space-y-2">
-          
-           {/* Glassmorphic Day In Life */}
-           <div className="bg-gradient-to-r from-blue-50 via-cyan-50 to-sky-100 backdrop-blur-3xl rounded-[2rem] p-5 md:p-6 border border-blue-200/50 shadow-xl text-slate-800 relative overflow-hidden group">
-             <div className="absolute top-0 right-0 w-32 h-32 bg-sky-200/50 rounded-bl-full -z-0 blur-xl"></div>
-             <h3 className="text-xl md:text-2xl font-black text-blue-900 mb-3 flex items-center justify-center sm:justify-start gap-2 relative z-10">
-               <PlayCircle className="w-5 h-5 md:w-6 md:h-6 text-blue-600" /> A Day in the Life
-             </h3>
-             <p className="text-slate-700 font-medium text-sm md:text-base leading-relaxed relative z-10 text-center sm:text-left">
-               "{career.dayInLife}"
-             </p>
-           </div>
+      {/* CONTENT BLOCKS GRID */}
+      <div className="w-full space-y-2">
 
-           {/* TIER 2: Expansive Roadmap Component */}
-           <div className="bg-gradient-to-br from-blue-500 to-sky-400 backdrop-blur-xl rounded-[2rem] p-5 md:p-8 border border-blue-400 shadow-xl transition-all text-center sm:text-left relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-bl-full blur-2xl"></div>
-              <h3 className="text-xl md:text-3xl font-black text-white mb-2 flex items-center justify-center sm:justify-start gap-2 relative z-10 drop-shadow-md">
-                <Compass className="w-6 h-6 md:w-8 md:h-8 text-white" /> Career Roadmap Strategy
-              </h3>
-              <p className="text-white/90 font-bold text-xs md:text-sm mb-4 text-center sm:text-left relative z-10">The exact structural timeline you need to reach senior mastery in this specific field.</p>
-              
-              <div className="relative border-l-[3px] border-white/40 sm:ml-4 ml-2 space-y-2 pb-1 text-left z-10">
-                {career.roadmap.map((step, i) => (
-                   <div key={i} className="relative pl-6 sm:pl-8 group">
-                      <span className="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-blue-600 border-[3px] border-white group-hover:scale-110 group-hover:border-white transition-all duration-300 shadow-md" />
-                      <div className="bg-white/10 backdrop-blur-md border border-white/30 p-4 rounded-xl shadow-sm hover:-translate-y-1 hover:bg-white/20 transition-all text-white">
-                         <span className="text-[10px] font-black uppercase tracking-widest text-sky-100 mb-1 block">{step.year}</span>
-                         <h4 className="text-base md:text-lg font-black text-white leading-tight mb-1 drop-shadow-sm">{step.title}</h4>
-                         <p className="text-white/90 font-medium text-xs md:text-sm leading-relaxed">{step.desc}</p>
-                      </div>
-                   </div>
-                ))}
+        {/* Glassmorphic Day In Life */}
+        <div className="bg-gradient-to-r from-blue-50 via-cyan-50 to-sky-100 backdrop-blur-3xl rounded-[2rem] p-5 md:p-6 border border-blue-200/50 shadow-xl text-slate-800 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-sky-200/50 rounded-bl-full -z-0 blur-xl"></div>
+          <h3 className="text-xl md:text-2xl font-black text-blue-900 mb-3 flex items-center justify-center sm:justify-start gap-2 relative z-10">
+            <PlayCircle className="w-5 h-5 md:w-6 md:h-6 text-blue-600" /> A Day in the Life
+          </h3>
+          <p className="text-slate-700 font-medium text-sm md:text-base leading-relaxed relative z-10 text-center sm:text-left">
+            "{career.dayInLife}"
+          </p>
+        </div>
+
+        {/* TIER 2: Expansive Roadmap Component */}
+        <div className="bg-gradient-to-br from-blue-500 to-sky-400 backdrop-blur-xl rounded-[2rem] p-5 md:p-8 border border-blue-400 shadow-xl transition-all text-center sm:text-left relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-bl-full blur-2xl"></div>
+          <h3 className="text-xl md:text-3xl font-black text-white mb-2 flex items-center justify-center sm:justify-start gap-2 relative z-10 drop-shadow-md">
+            <Compass className="w-6 h-6 md:w-8 md:h-8 text-white" /> Career Roadmap Strategy
+          </h3>
+          <p className="text-white/90 font-bold text-xs md:text-sm mb-4 text-center sm:text-left relative z-10">The exact structural timeline you need to reach senior mastery in this specific field.</p>
+
+          <div className="relative border-l-[3px] border-white/40 sm:ml-4 ml-2 space-y-2 pb-1 text-left z-10">
+            {career.roadmap.map((step, i) => (
+              <div key={i} className="relative pl-6 sm:pl-8 group">
+                <span className="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-blue-600 border-[3px] border-white group-hover:scale-110 group-hover:border-white transition-all duration-300 shadow-md" />
+                <div className="bg-white/10 backdrop-blur-md border border-white/30 p-4 rounded-xl shadow-sm hover:-translate-y-1 hover:bg-white/20 transition-all text-white">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-sky-100 mb-1 block">{step.year}</span>
+                  <h4 className="text-base md:text-lg font-black text-white leading-tight mb-1 drop-shadow-sm">{step.title}</h4>
+                  <p className="text-white/90 font-medium text-xs md:text-sm leading-relaxed">{step.desc}</p>
+                </div>
               </div>
-           </div>
-
-       </div>
-
-       {/* Translucent Base Knowledge Container */}
-       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-center sm:text-left mt-2">
-          {/* Key Tools Array */}
-          <div className="rounded-[2rem] bg-gradient-to-br from-indigo-50 to-white/60 border border-indigo-100 p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
-             <h2 className="text-lg md:text-xl font-black text-indigo-950 mb-2 flex items-center justify-center sm:justify-start gap-2">
-               <Laptop className="w-5 h-5 text-indigo-600" /> Daily Core Tools
-             </h2>
-             <p className="text-indigo-900/60 font-medium mb-4 text-xs md:text-sm">
-               Professionals in this field consistently execute utilizing these software platforms or hardware.
-             </p>
-             <div className="flex flex-wrap justify-center sm:justify-start gap-2">
-                {career.keyTools.map((tool, i) => (
-                  <span key={i} className="px-3 py-1.5 bg-white text-indigo-900 shadow-sm border border-indigo-100/50 font-bold text-xs md:text-sm rounded-lg hover:-translate-y-0.5 transition-transform cursor-default">
-                     {tool}
-                  </span>
-                ))}
-             </div>
+            ))}
           </div>
+        </div>
 
-          {/* Important Links Array */}
-          <div className="rounded-[2rem] bg-gradient-to-br from-sky-50 to-white/60 border border-sky-100 p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
-             <h2 className="text-lg md:text-xl font-black text-sky-950 mb-2 flex items-center justify-center sm:justify-start gap-2">
-               <ExternalLink className="w-5 h-5 text-sky-600" /> Institutional Links
-             </h2>
-             <p className="text-sky-900/60 font-medium mb-4 text-xs md:text-sm">
-               Official portals or global communities that govern standards for this career path.
-             </p>
-             <div className="space-y-2 text-left">
-               {career.importantLinks.map((lnk, i) => (
-                 <a key={i} href={lnk.url} target="_blank" rel="noreferrer" className="flex items-center justify-between px-3 py-2.5 bg-white border border-sky-100/50 rounded-lg font-bold text-sky-700 hover:bg-sky-600 hover:text-white hover:border-sky-600 shadow-sm transition-all group text-xs md:text-sm">
-                   {lnk.name}
-                   <ExternalLink className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-transform" />
-                 </a>
-               ))}
-             </div>
+      </div>
+
+      {/* Translucent Base Knowledge Container */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-center sm:text-left mt-2">
+        {/* Key Tools Array */}
+        <div className="rounded-[2rem] bg-gradient-to-br from-indigo-50 to-white/60 border border-indigo-100 p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h2 className="text-lg md:text-xl font-black text-indigo-950 mb-2 flex items-center justify-center sm:justify-start gap-2">
+            <Laptop className="w-5 h-5 text-indigo-600" /> Daily Core Tools
+          </h2>
+          <p className="text-indigo-900/60 font-medium mb-4 text-xs md:text-sm">
+            Professionals in this field consistently execute utilizing these software platforms or hardware.
+          </p>
+          <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+            {career.keyTools.map((tool, i) => (
+              <span key={i} className="px-3 py-1.5 bg-white text-indigo-900 shadow-sm border border-indigo-100/50 font-bold text-xs md:text-sm rounded-lg hover:-translate-y-0.5 transition-transform cursor-default">
+                {tool}
+              </span>
+            ))}
           </div>
-       </div>
+        </div>
+
+        {/* Important Links Array */}
+        <div className="rounded-[2rem] bg-gradient-to-br from-sky-50 to-white/60 border border-sky-100 p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
+          <h2 className="text-lg md:text-xl font-black text-sky-950 mb-2 flex items-center justify-center sm:justify-start gap-2">
+            <ExternalLink className="w-5 h-5 text-sky-600" /> Institutional Links
+          </h2>
+          <p className="text-sky-900/60 font-medium mb-4 text-xs md:text-sm">
+            Official portals or global communities that govern standards for this career path.
+          </p>
+          <div className="space-y-2 text-left">
+            {career.importantLinks.map((lnk, i) => (
+              <a key={i} href={lnk.url} target="_blank" rel="noreferrer" className="flex items-center justify-between px-3 py-2.5 bg-white border border-sky-100/50 rounded-lg font-bold text-sky-700 hover:bg-sky-600 hover:text-white hover:border-sky-600 shadow-sm transition-all group text-xs md:text-sm">
+                {lnk.name}
+                <ExternalLink className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-transform" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
 
     </div>
   );
