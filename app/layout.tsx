@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Learnthru - Your Career Guidance Platform',
+  title: 'Eduguide - Your Career Guidance Platform',
   description: 'Discover government colleges, scholarships, and career paths. Get personalized course recommendations through psychometric testing.',
   openGraph: {
     images: [
