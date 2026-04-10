@@ -17,7 +17,7 @@ export default function Home() {
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-extrabold text-slate-800 tracking-tight">Learnthru</span>
+          <span className="text-xl font-extrabold text-slate-800 tracking-tight">EduGuide</span>
         </div>
         <div className="flex items-center gap-4">
             <button className="text-sm font-bold text-slate-700 hover:text-indigo-600 transition-colors">

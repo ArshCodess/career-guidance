@@ -57,7 +57,7 @@ export default function DashboardLayout({
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200">
             <Sparkles className="w-4 h-4 text-white" />
           </div>
-          <span className="text-xl font-bold text-slate-800">EduGuid</span>
+          <span className="text-xl font-bold text-slate-800">EduGuide</span>
         </div>
 
         <nav className="flex-1 space-y-1">
@@ -147,7 +147,7 @@ export default function DashboardLayout({
                   <User className="w-8 h-8 text-blue-400 relative z-10 group-hover:text-cyan-500 transition-colors" />
                 </div>
 
-                <h3 className="font-extrabold text-slate-800 text-lg mb-1 tracking-tight relative z-10">Stella Walton</h3>
+                <h3 className="font-extrabold text-slate-800 text-lg mb-1 tracking-tight relative z-10">Arman</h3>
                 <p className="text-[10px] text-blue-500 font-black uppercase tracking-widest mb-6 relative z-10">Class 12 Student</p>
 
                 {/* Custom Info Block (Cold Theme) */}
