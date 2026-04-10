@@ -1,10 +1,11 @@
 'use client';
 
-import { GraduationCap, Briefcase, Building2, Gift, Search, Bell, ChevronRight, BookOpen, ClipboardList, LayoutDashboard, Sparkles, FileText, Headphones, User, TrendingUp, MapPin, Star, Zap } from 'lucide-react';
+import { GraduationCap, Briefcase, Building2, Gift, Search, Bell, ChevronRight, BookOpen, ClipboardList, LayoutDashboard, Sparkles, FileText, Headphones, User, TrendingUp, MapPin, Star, Zap, Mic, Phone, Video } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
+import { useUserContext } from '@/hooks/user-context';
 
 const formatCurrentDate = () => {
   const date = new Date();
@@ -43,6 +44,13 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const [currentDate, setCurrentDate] = useState('');
+  const { user } = useUserContext();
+  const router = useRouter();
+
+  const displayName =
+    user?.fullName || [user?.firstName, user?.lastName].filter(Boolean).join(' ') || 'Student';
+  const displayRole = user?.role ? user.role.replace(/\b\w/g, (char) => char.toUpperCase()) : 'Student';
+  const displayStatus = user?.onboardingStatus === 'completed' ? 'Onboarded' : user?.onboardingStatus === 'in_progress' ? 'In Progress' : 'New Student';
 
   useEffect(() => {
     setCurrentDate(formatCurrentDate());
@@ -50,14 +58,35 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen flex bg-transparent">
+      <div className="fixed bottom-6 right-6 z-50">
+        <button 
+        onClick={()=>{
+          router.push('/counselling')
+        }}
+        className="relative w-16 h-16 bg-blue-600 rounded-full text-white shadow-xl hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 flex items-center justify-center animate-pulse-subtle">
+          {/* The icons/content */}
+          <div className="relative z-10 flex items-center justify-center w-full h-full">
+            {/* Standard icon */}
+            <Video className="w-8 h-8 text-white group-hover:hidden transition-opacity duration-300 opacity-100 group-hover:opacity-0" />
+            {/* Alternative icon on hover */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <Mic className="w-6 h-6 text-white" />
+              <Phone className="w-6 h-6 text-white ml-1" />
+            </div>
+          </div>
 
+          {/* Notification badge */}
+          <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">3</span>
+
+        </button>
+      </div>
       {/* LEFT SIDEBAR - fixed */}
       <aside className="hidden lg:flex w-64 bg-white/60 backdrop-blur-sm p-6 flex-col gap-6 fixed top-0 left-0 h-screen overflow-y-auto z-20">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-200">
             <Sparkles className="w-4 h-4 text-white" />
           </div>
-          <span className="text-xl font-bold text-slate-800">EduGuid</span>
+          <span className="text-xl font-bold text-slate-800">EduGuide</span>
         </div>
 
         <nav className="flex-1 space-y-1">
@@ -143,12 +172,25 @@ export default function DashboardLayout({
 
                 {/* Elegant Avatar */}
                 <div className="w-20 h-20 bg-white flex items-center justify-center rounded-[1.25rem] border border-blue-100 shadow-sm mb-4 mt-2 group relative z-10 transition-transform hover:-translate-y-1 hover:shadow-md">
+                  {/* Hover Gradient Background */}
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-cyan-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-[1.25rem]" />
-                  <User className="w-8 h-8 text-blue-400 relative z-10 group-hover:text-cyan-500 transition-colors" />
+
+                  {/* Profile Image or Icon Container */}
+                  <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-400 relative z-10 group-hover:border-cyan-500 transition-colors flex items-center justify-center bg-white">
+                    {user?.imageUrl ? (
+                      <img
+                        src={user.imageUrl}
+                        alt="User profile"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-6 h-6 text-blue-400 group-hover:text-cyan-500 transition-colors" />
+                    )}
+                  </div>
                 </div>
 
-                <h3 className="font-extrabold text-slate-800 text-lg mb-1 tracking-tight relative z-10">Stella Walton</h3>
-                <p className="text-[10px] text-blue-500 font-black uppercase tracking-widest mb-6 relative z-10">Class 12 Student</p>
+                <h3 className="font-extrabold text-slate-800 text-lg mb-1 tracking-tight relative z-10">{displayName}</h3>
+                <p className="text-[10px] text-blue-500 font-black uppercase tracking-widest mb-6 relative z-10">{displayRole} · {displayStatus}</p>
 
                 {/* Custom Info Block (Cold Theme) */}
                 <div className="w-full bg-white/60 backdrop-blur-md rounded-2xl p-4 mb-6 border border-white flex flex-col gap-3 relative z-10 shadow-sm shadow-blue-900/5">

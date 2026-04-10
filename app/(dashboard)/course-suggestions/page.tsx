@@ -108,9 +108,9 @@ const EXTRA_STREAMS = [
 ];
 
 const RESULT_COURSES = [
-  { name: 'B.Sc. Computer Science', match: 95, description: 'Perfect for problem solvers passionate about technology and logic.', careers: ['Software Developer', 'Data Scientist', 'AI Engineer'], color: '#4F46E5', slug: 'software-developer' },
-  { name: 'B.Tech Information Technology', match: 88, description: 'Ideal for those who love building software systems and networks.', careers: ['Web Developer', 'System Analyst', 'Network Engineer'], color: '#0f2027', slug: 'network-engineer' },
-  { name: 'B.Sc. Mathematics', match: 75, description: 'Great for analytical thinkers who thrive with numbers and logic.', careers: ['Data Analyst', 'Statistician', 'Actuarial Scientist'], color: '#ff6b9d', slug: 'data-scientist' },
+  { name: 'B.Sc. Computer Science', match: Math.floor(Math.random() * 16) + 80, description: 'Perfect for problem solvers passionate about technology and logic.', careers: ['Software Developer', 'Data Scientist', 'AI Engineer'], color: '#4F46E5', slug: 'software-developer' },
+  { name: 'B.Tech Information Technology', match: Math.floor(Math.random() * 16) + 80, description: 'Ideal for those who love building software systems and networks.', careers: ['Web Developer', 'System Analyst', 'Network Engineer'], color: '#0f2027', slug: 'network-engineer' },
+  { name: 'B.Sc. Mathematics', match: Math.floor(Math.random() * 16) + 80, description: 'Great for analytical thinkers who thrive with numbers and logic.', careers: ['Data Analyst', 'Statistician', 'Actuarial Scientist'], color: '#ff6b9d', slug: 'data-scientist' },
 ];
 
 const ALL_PATHS = [
@@ -365,7 +365,7 @@ export default function CourseSuggestionsPage() {
           {RESULT_COURSES.map((c, i) => <ResultCard key={i} course={c} rank={i} />)}
         </div>
         <Link
-          href="/college-directory"
+          href="/college-directory?from=course-suggestions"
           className="w-full py-5 rounded-[2rem] font-black text-white text-lg flex items-center justify-center gap-3 hover:scale-[1.01] transition-transform active:scale-95"
           style={{ background: GRAD.page, boxShadow: '0 10px 40px rgba(255,107,157,0.4)' }}
         >
@@ -395,7 +395,7 @@ export default function CourseSuggestionsPage() {
             </p>
             <div className="flex flex-wrap items-center gap-4 mt-8">
               <Link
-                href="/college-directory"
+                href="/college-directory?from=course-suggestions"
                 className="flex items-center gap-2 px-6 py-3.5 rounded-2xl font-black text-[14px] transition-all hover:scale-105 active:scale-95 shadow-xl"
                 style={{ background: 'white', color: '#ff6b9d' }}
               >

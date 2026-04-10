@@ -5,10 +5,11 @@ import {
   MapPin, GraduationCap, Star, SlidersHorizontal,
   X, Wifi, BookOpen, Home, Monitor, FlaskConical,
   ChevronDown, Dumbbell, Coffee, Search, ArrowRight,
-  Building2, Users, TrendingUp, Award,
+  Building2, Users, TrendingUp, Award, ArrowLeft, Sparkles as SparklesIcon,
 } from 'lucide-react';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,7 +70,7 @@ interface UICollege {
   distance_km: number;
   college_type: string;
   facilities: string[];
-  image_url: string;
+  imageUrl: string;
   accreditation?: string;
   hostel_available?: boolean;
   hostel_fee_inr?: number;
@@ -111,7 +112,7 @@ function mapCollegeToUI(c: College): { college: UICollege; courses: Course[] } {
     distance_km: 0,
     college_type: c.type,
     facilities: c.facilities ?? [],
-    image_url: getCollegeImage(c.name, c._id),
+    imageUrl: getCollegeImage(c.name, c._id),
     accreditation: c.accreditation,
     hostel_available: c.hostel_available,
     hostel_fee_inr: c.hostel_fee_inr,
@@ -159,6 +160,19 @@ const FALLBACK_RAW: College[] = [
       { course_id: 'btech', course_name: 'B.Tech', stream: 'science', specialization_id: 'btech_cs', specialization_name: 'CS', rank_in_specialization: 4, total_fee_inr: 520000, annual_fee_inr: 130000, fee_category: 'mid', entrance_exams: ['JEE Main', 'UPTAC'], eligibility: '10+2 PCM, 45%+', career_paths: ['Software Engineer', 'Product Manager'], college_id: 'akgec' },
     ],
   },
+  {
+    _id: '3', name: 'IMS Engineering College', location: 'Ghaziabad', location_tag: 'ghaziabad',
+    type: 'Private', affiliation: 'AKTU', accreditation: 'NAAC B',
+    hostel_available: true, hostel_fee_inr: 60000,
+    facilities: ['Library', 'Placement Cell', 'Labs'],
+    placement_tier: 'tier3',
+    placements: { highest_lpa: 15, median_lpa: 3, average_lpa: 3.5 },
+    top_recruiters: ['TCS', 'Wipro'],
+    website: 'https://www.imsengineeringcollege.com',
+    specializations_offered: [
+      { course_id: 'bca', course_name: 'BCA', stream: 'science', specialization_id: 'bca_softdev', specialization_name: 'Software Development', rank_in_specialization: 8, total_fee_inr: 300000, annual_fee_inr: 75000, fee_category: 'low', entrance_exams: ['UPTAC'], eligibility: '10+2, 45%+', career_paths: ['Software Developer', 'IT Support'], college_id: 'ims_engineering_college' },
+    ],
+  },
 ];
 
 /* ─── Config ─────────────────────────────────────────────── */
@@ -197,7 +211,7 @@ function CollegeCard({
       {/* Premium Image Header */}
       <div className="relative h-[200px] w-full overflow-hidden bg-slate-100">
         <img 
-          src={college.image_url} 
+          src={college.imageUrl} 
           alt={college.name}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
@@ -274,7 +288,7 @@ function CollegeCard({
           <div className="bg-slate-50/70 rounded-xl p-3 border border-slate-100 hover:bg-slate-50 transition-colors">
              <span className="text-[11px] font-semibold text-slate-400 block mb-0.5 uppercase tracking-wide">Starting From</span>
              <span className="text-[15px] font-black text-slate-800">
-               {minFee ? `₹${(minFee / 1000).toFixed(0)}K` : 'Var.'}
+               {minFee ? `₹${(minFee / 100000).toFixed(2)}L` : 'Var.'}
                <span className="text-[10px] text-slate-400 font-medium lowercase">/yr</span>
              </span>
           </div>
@@ -286,7 +300,7 @@ function CollegeCard({
           className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-[14px] font-bold text-white transition-all hover:bg-[#3D5BBA] active:scale-[0.98] shadow-sm shadow-[#4A68C8]/20"
           style={{ background: '#4A68C8' }}
         >
-          Explore Campus <ArrowRight className="w-4 h-4 ml-1" />Tell me. Assistant. 
+          Explore Campus <ArrowRight className="w-4 h-4 ml-1" /> 
         </Link>
       </div>
     </div>
@@ -295,6 +309,8 @@ function CollegeCard({
 
 /* ─── Main Page ──────────────────────────────────────────── */
 export default function CollegeDirectoryPage() {
+  const searchParams = useSearchParams();
+  const courseFilter = searchParams.get('course');
   const [colleges, setColleges] = useState<UICollege[]>([]);
   const [courses, setCourses] = useState<Record<string, Course[]>>({});
   const [loading, setLoading] = useState(true);
@@ -311,7 +327,17 @@ export default function CollegeDirectoryPage() {
         
         const res = await fetch('/api/colleges');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const raw: College[] = await res.json();
+        let raw: College[] = await res.json();
+
+        // Filter by course if specified
+        if (courseFilter) {
+          raw = raw.filter(college =>
+            college.specializations_offered?.some(spec =>
+              spec.course_id.toLowerCase() === courseFilter.toLowerCase() ||
+              spec.specialization_id.toLowerCase().includes(courseFilter.toLowerCase())
+            )
+          );
+        }
 
         const mappedColleges: UICollege[] = [];
         const mappedCourses: Record<string, Course[]> = {};
@@ -322,19 +348,46 @@ export default function CollegeDirectoryPage() {
           mappedCourses[college.id] = c;
         }
 
+        // Sort colleges by tier (tier1 first)
+        const tierOrder = { tier1: 1, tier2: 2, tier3: 3 };
+        mappedColleges.sort((a, b) => {
+          const aTier = tierOrder[a.placement_tier as keyof typeof tierOrder] || 4;
+          const bTier = tierOrder[b.placement_tier as keyof typeof tierOrder] || 4;
+          return aTier - bTier;
+        });
+
         setColleges(mappedColleges);
         setCourses(mappedCourses);
       } catch (err) {
         console.error('Failed to fetch colleges, using fallback data:', err);
         setError('Displaying sample data. API connection unavailable.');
         
+        let fallbackRaw = FALLBACK_RAW;
+        if (courseFilter) {
+          fallbackRaw = fallbackRaw.filter(college =>
+            college.specializations_offered?.some(spec =>
+              spec.course_id.toLowerCase() === courseFilter.toLowerCase() ||
+              spec.specialization_id.toLowerCase().includes(courseFilter.toLowerCase())
+            )
+          );
+        }
+        
         const mappedColleges: UICollege[] = [];
         const mappedCourses: Record<string, Course[]> = {};
-        for (const doc of FALLBACK_RAW) {
+        for (const doc of fallbackRaw) {
           const { college, courses: c } = mapCollegeToUI(doc);
           mappedColleges.push(college);
           mappedCourses[college.id] = c;
         }
+
+        // Sort colleges by tier (tier1 first)
+        const tierOrder = { tier1: 1, tier2: 2, tier3: 3 };
+        mappedColleges.sort((a, b) => {
+          const aTier = tierOrder[a.placement_tier as keyof typeof tierOrder] || 4;
+          const bTier = tierOrder[b.placement_tier as keyof typeof tierOrder] || 4;
+          return aTier - bTier;
+        });
+
         setColleges(mappedColleges);
         setCourses(mappedCourses);
       } finally {
@@ -343,7 +396,7 @@ export default function CollegeDirectoryPage() {
     }
 
     fetchColleges();
-  }, []);
+  }, [courseFilter]);
 
   const toggleShortlist = (id: string) =>
     setShortlisted(prev => {
@@ -376,8 +429,31 @@ export default function CollegeDirectoryPage() {
       ? `${cities.length} Cities`
       : 'All Locations';
 
+  const fromPage = searchParams.get('from');
+  
+  const getBackLink = () => {
+    switch (fromPage) {
+      case 'career-quiz':
+        return '/career-quiz';
+      case 'course-suggestions':
+        return '/course-suggestions';
+      case 'secondary-trajectories':
+        return '/secondary-trajectories';
+      default:
+        return '/career-quiz';
+    };
+  };
+  
   return (
     <div className="space-y-6 max-w-[1400px] mx-auto pb-10">
+
+      {/* ── Back Navigation Button ── */}
+      <Link
+        href={getBackLink()}
+        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold text-[14px] hover:bg-slate-50 hover:border-slate-300 hover:shadow-sm transition-all active:scale-95"
+      >
+        <ArrowLeft className="w-4 h-4" /> Go Back
+      </Link>
 
       {/* ── Error banner ── */}
       {error && (
@@ -516,7 +592,7 @@ export default function CollegeDirectoryPage() {
       <div className="w-full">
          <div className="flex items-center justify-between mb-6 px-1">
            <h2 className="text-[22px] font-black text-slate-800 flex items-center gap-2">
-             {loading ? 'Finding Campuses...' : `${filtered.length} Universities Available`}
+             {loading ? 'Finding Campuses...' : courseFilter ? `Colleges for ${courseFilter.toUpperCase()}` : `${filtered.length} Universities Available`}
            </h2>
            <button className="hidden sm:flex items-center gap-1.5 text-[14px] font-bold text-[#4A68C8] hover:text-[#3a529e] transition-colors">
               <SlidersHorizontal className="w-4 h-4" /> Advanced Filters
@@ -557,13 +633,5 @@ export default function CollegeDirectoryPage() {
         )}
       </div>
     </div>
-  );
-}
-
-function SparklesIcon(props: any) {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-      <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>
-    </svg>
   );
 }

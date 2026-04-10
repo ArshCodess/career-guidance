@@ -1,11 +1,12 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-
+import { ClerkProvider, Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
+import { UserProvider } from '../hooks/user-context';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Eduguide - Your Career Guidance Platform',
+  title: 'EduGuide - Your Career Guidance Platform',
   description: 'Discover government colleges, scholarships, and career paths. Get personalized course recommendations through psychometric testing.',
   openGraph: {
     images: [
@@ -31,9 +32,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {children}
-      </body>
+      <ClerkProvider>
+        <UserProvider>
+          <body className={inter.className}>
+        <div className='absolute right-5 z-20'><UserButton/></div>
+            {children}
+          </body>
+        </UserProvider>
+      </ClerkProvider>
     </html>
   );
 }

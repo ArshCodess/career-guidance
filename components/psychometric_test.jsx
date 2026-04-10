@@ -193,7 +193,7 @@ function Welcome({ onStart }) {
   return (
     <div style={{ fontFamily: "var(--font-sans)", maxWidth: 600, margin: "0 auto", padding: "2rem 1rem" }}>
       <div style={{ marginBottom: "2rem" }}>
-        <p style={{ fontSize: 11, fontWeight: 500, color: "var(--color-text-tertiary)", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 0.5rem" }}>Learnthru</p>
+        <p style={{ fontSize: 11, fontWeight: 500, color: "var(--color-text-tertiary)", textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 0.5rem" }}>EduGuide</p>
         <h1 style={{ fontSize: 26, fontWeight: 500, color: "var(--color-text-primary)", margin: "0 0 0.5rem", lineHeight: 1.3 }}>
           Career Psychometric Test
         </h1>

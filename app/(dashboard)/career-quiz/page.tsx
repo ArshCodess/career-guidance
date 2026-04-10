@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { 
   Activity, ArrowRight, BrainCircuit, BookHeart, CheckCircle2, 
-  ChevronRight, Compass, Sparkles, Milestone, GraduationCap, 
+  ChevronDown, ChevronRight, Compass, Sparkles, Milestone, GraduationCap, 
   Target, Rocket, Lightbulb, Star, TrendingUp, Briefcase, Zap, RotateCcw
 } from 'lucide-react';
 import psychometricJson from '@/psychometric.json';
@@ -101,6 +101,7 @@ export default function CareerQuiz() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<AnswerMap>({});
   const [results, setResults] = useState<ResultItem[] | null>(null);
+  const [expandedSecondary, setExpandedSecondary] = useState<Set<string>>(new Set());
   const topRef = useRef<HTMLDivElement | null>(null);
   const TOTAL_QUESTIONS = quizQuestions.length;
 
@@ -124,7 +125,7 @@ export default function CareerQuiz() {
     else { setResults(computeResults(answers)); setScreen('results'); }
   };
   const handleBack = () => { if (currentIndex > 0) setCurrentIndex(p => p - 1); };
-  const restart = () => { setQuizQuestions(createQuizQuestions()); setAnswers({}); setCurrentIndex(0); setResults(null); setScreen('welcome'); };
+  const restart = () => { setQuizQuestions(createQuizQuestions()); setAnswers({}); setCurrentIndex(0); setResults(null); setExpandedSecondary(new Set()); setScreen('welcome'); };
 
   const WELCOME_BLOCKS = [
     { icon: Compass, colorBg: 'bg-gradient-to-br from-blue-50 to-indigo-100', colorBorder: 'border-indigo-200', iconColor: 'text-indigo-600', badge: 'bg-indigo-100 text-indigo-700' },
@@ -447,10 +448,10 @@ if (screen === 'quiz' && currentQuestion) {
                   <p className="text-[11px] text-slate-500 font-medium">Explore top-tier courses perfectly aligned with this specialization.</p>
                </div>
                <Link
-                 href="/course-suggestions"
+                 href={`/college-directory?course=${topResult.course_id}&from=career-quiz`}
                  className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-lg hover:shadow-blue-500/30 hover:scale-[1.02] transition-all whitespace-nowrap"
                >
-                 View Course Suggestions <ArrowRight className="w-4 h-4" />
+                 Explore Colleges <ArrowRight className="w-4 h-4" />
                </Link>
            </div>
         </div>
@@ -461,22 +462,63 @@ if (screen === 'quiz' && currentQuestion) {
              <Activity className="w-4 h-4 text-slate-400" /> Secondary Viable Trajectories
            </h3>
            <div className="grid md:grid-cols-3 gap-3">
-             {results.slice(1, 4).map((result, i) => (
-                <div key={result.specialization_id} className="bg-white rounded-2xl border border-slate-200 p-4 flex items-center gap-4 group hover:border-blue-300 hover:bg-blue-50/30 transition-colors shadow-sm">
-                   <div className="relative w-12 h-12 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
-                      <div className="absolute inset-0 bg-blue-100/50 scale-0 group-hover:scale-100 transition-transform origin-center rounded-full" />
-                      <span className="text-sm font-black text-slate-800 relative z-10">{result.pct}%</span>
+             {results.slice(1, 4).map((result, i) => {
+               const isExpanded = expandedSecondary.has(result.specialization_id);
+               return (
+                <div key={result.specialization_id} className="bg-white rounded-2xl border border-slate-200 p-4 group hover:border-blue-300 hover:bg-blue-50/30 transition-colors shadow-sm">
+                   <div className="flex items-center justify-between">
+                     <div className="flex items-center gap-4 flex-1">
+                       <div className="relative w-12 h-12 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden">
+                          <div className="absolute inset-0 bg-blue-100/50 scale-0 group-hover:scale-100 transition-transform origin-center rounded-full" />
+                          <span className="text-sm font-black text-slate-800 relative z-10">{result.pct}%</span>
+                       </div>
+                       <div className="flex-1">
+                          <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-tight mb-0.5">
+                            {result.specialization_name}
+                          </h4>
+                          <p className="text-[10px] font-semibold text-slate-500">
+                            {result.course_name}
+                          </p>
+                       </div>
+                     </div>
+                     <button
+                       onClick={() => {
+                         const newExpanded = new Set(expandedSecondary);
+                         if (isExpanded) newExpanded.delete(result.specialization_id);
+                         else newExpanded.add(result.specialization_id);
+                         setExpandedSecondary(newExpanded);
+                       }}
+                       className="w-6 h-6 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors"
+                     >
+                       <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                     </button>
                    </div>
-                   <div>
-                      <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-tight mb-0.5">
-                        {result.specialization_name}
-                      </h4>
-                      <p className="text-[10px] font-semibold text-slate-500">
-                        {result.course_name}
-                      </p>
-                   </div>
+                   {isExpanded && (
+                     <div className="mt-3 pt-3 border-t border-slate-100 space-y-3">
+                       <div>
+                         <p className="text-xs text-slate-600 mb-2">{result.brief}</p>
+                         <div className="flex flex-wrap gap-1">
+                           {result.career_paths.slice(0, 3).map(path => (
+                             <span key={path} className="text-[9px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">
+                               {path}
+                             </span>
+                           ))}
+                         </div>
+                       </div>
+                       <Link
+                         href={`/secondary-trajectories`}
+                         onClick={() => {
+                           localStorage.setItem('secondaryTrajectories', JSON.stringify(results.slice(1, 4)));
+                         }}
+                         className="inline-flex w-full items-center justify-center gap-1.5 bg-gradient-to-r from-blue-400 to-indigo-400 text-white font-bold text-xs px-3 py-2 rounded-lg hover:scale-[1.02] transition-transform active:scale-95 shadow-sm"
+                       >
+                         Explore Colleges <ArrowRight className="w-3 h-3" />
+                       </Link>
+                     </div>
+                   )}
                 </div>
-             ))}
+               );
+             })}
            </div>
         </div>
 

@@ -141,15 +141,29 @@ export default function Home() {
             </motion.div>
             <span className="text-xl font-black text-slate-800 tracking-tight">Learnthru</span>
           </div>
-          <div className="flex items-center gap-6">
-              <Link href="/dashboard" className="text-xs font-bold text-slate-600 hover:text-[#5B7FDB] transition-colors">
-                Login
-              </Link>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link href="/dashboard" className="hidden sm:inline-flex text-xs font-bold bg-white text-[#3B5FCC] border-2 border-indigo-50 px-5 py-2 rounded-full hover:bg-indigo-50 hover:border-indigo-100 transition-all shadow-[0_2px_10px_-3px_rgba(59,95,204,0.1)] hover:shadow-[0_4px_14px_-4px_rgba(59,95,204,0.2)]">
-                  Sign Up
-                </Link>
-              </motion.div>
+          
+          <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 tracking-tight leading-[1.1] mb-6">
+            Discover Your True<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+              Potential &amp; Purpose
+            </span>
+          </h1>
+          
+          <p className="text-lg lg:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Take psychometric tests, discover top government colleges, track vital scholarship deadlines, and build a career path mapped perfectly to your unique skills.
+          </p>
+          
+          {/* THE BIG "GET STARTED" BUTTON OPENING CLERK */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-2"
+            onClick={()=>{
+              router.push('/dashboard')
+            }}
+          >
+              <button className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg px-10 py-5 rounded-full overflow-hidden shadow-xl hover:shadow-indigo-500/30 hover:scale-105 transition-all duration-300">
+                <span className="relative z-10">GET STARTED</span>
+                <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+              </button>
           </div>
         </motion.header>
 

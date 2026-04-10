@@ -60,7 +60,29 @@ const CourseSchema = new Schema({
   }]
 });
 
+const UserSchema = new Schema({
+  clerkUserId: { type: String, required: true, unique: true, index: true },
+  email: { type: String, required: true, index: true },
+  emailVerified: { type: Boolean, default: false },
+  firstName: String,
+  lastName: String,
+  fullName: String,
+  imageUrl: String,
+  phoneNumber: String,
+  role: { type: String, enum: ['student', 'counselor', 'admin', 'guest'], default: 'student' },
+  onboardingStatus: { type: String, default: 'pending' },
+  preferences: {
+    interests: [String],
+    streams: [String],
+    careerGoals: [String],
+  },
+  metadata: Schema.Types.Mixed,
+}, {
+  timestamps: true,
+});
+
 // --- EXPORTS ---
 
 export const College = models.College || model('College', CollegeSchema);
 export const Course = models.Course || model('Course', CourseSchema);
+export const User = models.User || model('User', UserSchema);

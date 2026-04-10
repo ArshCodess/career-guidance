@@ -1,5 +1,6 @@
 'use client';
 
+import { useUserContext } from '@/hooks/user-context';
 import { GraduationCap, Briefcase, Building2, ChevronRight, Palette, FlaskConical, TrendingUp, ArrowRight, MapPin, Calendar, BookOpen } from 'lucide-react';
 import Link from 'next/link';
 
@@ -65,6 +66,7 @@ const careerPaths = [
 ];
 
 export default function DashboardPage() {
+  const {user} = useUserContext();
   return (
     <div className="space-y-8">
 
@@ -103,7 +105,7 @@ export default function DashboardPage() {
             <h1 className="text-3xl font-extrabold text-white leading-tight tracking-tight">
               Welcome back,{' '}
               <span className="relative inline-block">
-                <span className="relative z-10">Arman!</span>
+                <span className="relative z-10">{user?.firstName || 'Guest'}</span>
               </span>
             </h1>
           </div>
