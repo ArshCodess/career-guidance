@@ -212,17 +212,6 @@ export default function ViewCareerPage() {
     }, [careerPaths, searchQuery, selectedStream]);
 
     const loadCareerPaths = useCallback(async () => {
-        setLoading(true);
-        try {
-            const { data } = await supabase
-                .from('career_paths')
-                .select('*');
-            setCareerPaths(data && data.length > 0 ? data : ALL_CAREERS);
-        } catch {
-            setCareerPaths(ALL_CAREERS);
-        } finally {
-            setLoading(false);
-        }
     }, []);
 
     const filterCareers = useCallback(() => {
